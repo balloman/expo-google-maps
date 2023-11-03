@@ -1,0 +1,8 @@
+**/android/
+**/build/
+**/ios/
+**/node_modules/
+*.config.js
+**/.expo/
+*.md
+.github/*

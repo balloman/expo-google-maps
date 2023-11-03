@@ -1,0 +1,55 @@
+{
+  "name": "@balloman/expo-google-maps",
+  "version": "0.0.0",
+  "description": "An expo native module for google maps",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "open -a \"Xcode\" example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@balloman/expo-google-maps",
+    "ExpoGoogleMaps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balloman/expo-google-maps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/balloman/expo-google-maps/issues"
+  },
+  "author": "Bernard Allotey <ballotey01@gmail.com> (https://github.com/balloman)",
+  "license": "MIT",
+  "homepage": "https://github.com/balloman/expo-google-maps#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/react": "^18.0.25",
+    "@types/react-native": "^0.72.3",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "expo-module-scripts": "^3.0.11",
+    "expo-modules-core": "^1.5.11",
+    "prettier": "^3.0.3"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "platforms": ["ios", "android", "web"],
+  "ios": {
+    "modules": ["ExpoGoogleMapsModule", "ExpoGoogleMapsMarkerModule"]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.googlemaps.ExpoGoogleMapsModule",
+      "expo.modules.googlemaps.ExpoGoogleMapsMarkerModule"
+    ]
+  }
+}

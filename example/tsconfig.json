@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@balloman/expo-google-maps": ["../src/index"],
+      "@balloman/expo-google-maps/*": ["../src/*"]
+    }
+  }
+}
