@@ -55,6 +55,8 @@ public class ExpoGoogleMapsModule: Module {
           view.log("Native Error: One or more of the map styles failed to load. \(error)")
         }
       }
+      
+      Events("onMapIdle")
 
       //Animates camera to given location
       AsyncFunction("animateCamera") { (view: MapView, camera: Camera, animationOptions: AnimateOptions?) in

@@ -18,6 +18,11 @@ export type MapViewProps = {
   mapRef?: React.Ref<MapFunctions>;
   /** A json string of the style to apply to the map, if needed. See here: https://mapstyle.withgoogle.com/ */
   styleJson?: string;
+  /** A callback for when the map is idle after being moved */
+  onMapIdle?: (event: {
+    /** The position of the camera */
+    cameraPosition: Camera;
+  }) => void;
 } & ViewProps;
 
 export type MapFunctions = {
@@ -42,13 +47,22 @@ export type MapFunctions = {
   ): Promise<void>;
 };
 
-type NativeViewProps = MapViewProps & {
+type NativeViewProps = Omit<MapViewProps, "onMapIdle"> & {
   ref?: React.Ref<MapFunctions>;
+  onMapIdle?: (event: { nativeEvent: { cameraPosition: Camera } }) => void;
 };
 
 const NativeView: React.ComponentType<NativeViewProps> =
   requireNativeViewManager("ExpoGoogleMaps");
 
 export function MapView(props: MapViewProps) {
-  return <NativeView {...props} ref={props.mapRef} />;
+  const innerOnMapIdle = (event: {
+    nativeEvent: { cameraPosition: Camera };
+  }) => {
+    props.onMapIdle?.({ cameraPosition: event.nativeEvent.cameraPosition });
+  };
+
+  return (
+    <NativeView {...props} onMapIdle={innerOnMapIdle} ref={props.mapRef} />
+  );
 }

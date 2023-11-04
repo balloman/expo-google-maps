@@ -24,6 +24,9 @@ export default function App() {
         }}
         styleJson={JSON.stringify(styleJson)}
         mapRef={mapViewRef}
+        onMapIdle={({ cameraPosition }) =>
+          console.log("cameraPosition", cameraPosition)
+        }
         polygons={[
           {
             key: "1",
