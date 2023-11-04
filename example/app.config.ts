@@ -34,5 +34,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         },
       },
     ],
+    "expo-location",
   ],
 });
