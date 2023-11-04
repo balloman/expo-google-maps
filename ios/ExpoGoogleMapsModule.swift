@@ -56,6 +56,12 @@ public class ExpoGoogleMapsModule: Module {
         }
       }
       
+      Prop("showUserLocation") { (view, showUserLocation: Bool ) in
+        if (showUserLocation) {
+          view.mapView?.isMyLocationEnabled = true
+        }
+      }
+      
       Events("onMapIdle")
       Events("onDidChange")
 
