@@ -3,8 +3,9 @@ import GoogleMaps
 
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
-class MapView: ExpoView {
+class MapView: ExpoView, GMSMapViewDelegate {
   let mapView: GMSMapView?
+  let onMapIdle = EventDispatcher()
   private var markers: [MarkerView] = []
   private var polygons: [String: GMSPolygon] = [:]
   var propPolygons: [Polygon] = []
@@ -22,6 +23,7 @@ class MapView: ExpoView {
     clipsToBounds = true
     if mapView != nil {
       addSubview(mapView!)
+      mapView?.delegate = self
     }
   }
   
@@ -83,5 +85,14 @@ class MapView: ExpoView {
         polygons.removeValue(forKey: key)
       }
     }
+  }
+  
+  // MARK: MapViewDelegate
+  
+  func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
+    print("Map Idle", cameraPosition, cameraPosition.toCameraRecord())
+    onMapIdle([
+      "cameraPosition": cameraPosition.toCameraRecord().toDictionary()
+    ])
   }
 }
