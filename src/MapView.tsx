@@ -57,6 +57,12 @@ type MapProperties = {
   mapRef?: React.Ref<MapFunctions>;
   /** A json string of the style to apply to the map, if needed. See here: https://mapstyle.withgoogle.com/ */
   styleJson?: string;
+  /** Controls whether the My Location dot and accuracy circle is enabled.
+   * Due to a limitation in expo modules, setting this prop to undefined does not update the map.
+   * It must be set to either true or false to change the state
+   * @default false
+   */
+  showUserLocation?: boolean;
 } & ViewProps;
 
 type NativeViewProps = MapProperties & {

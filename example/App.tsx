@@ -4,7 +4,8 @@ import {
   MarkerView,
   setApiKey,
 } from "@balloman/expo-google-maps";
-import React from "react";
+import * as Location from "expo-location";
+import React, { useEffect } from "react";
 import { Button, StyleSheet, View } from "react-native";
 
 import styleJson from "./style.json";
@@ -13,6 +14,32 @@ setApiKey(process.env.EXPO_PUBLIC_API_KEY!);
 
 export default function App() {
   const mapViewRef = React.useRef<MapFunctions>(null);
+  const [status, setStatus] = React.useState<Location.PermissionStatus>();
+
+  useEffect(() => {
+    Location.getForegroundPermissionsAsync()
+      .then(({ status }) => {
+        setStatus(status);
+      })
+      .catch(e => {
+        if (e instanceof TypeError) {
+          return;
+        }
+        console.error(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (status === Location.PermissionStatus.UNDETERMINED) {
+      Location.requestForegroundPermissionsAsync()
+        .then(({ status }) => {
+          setStatus(status);
+        })
+        .catch(e => {
+          console.log("error", e);
+        });
+    }
+  }, [status]);
 
   return (
     <View style={styles.container}>
@@ -23,6 +50,7 @@ export default function App() {
           zoom: 13,
         }}
         styleJson={JSON.stringify(styleJson)}
+        showUserLocation
         mapRef={mapViewRef}
         onMapIdle={({ cameraPosition }) =>
           console.log("cameraPosition", cameraPosition)
