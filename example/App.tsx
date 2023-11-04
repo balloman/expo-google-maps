@@ -27,6 +27,9 @@ export default function App() {
         onMapIdle={({ cameraPosition }) =>
           console.log("cameraPosition", cameraPosition)
         }
+        onDidChange={({ cameraPosition }) =>
+          console.log("onDidChange", cameraPosition)
+        }
         polygons={[
           {
             key: "1",
