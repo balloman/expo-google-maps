@@ -57,6 +57,7 @@ public class ExpoGoogleMapsModule: Module {
       }
       
       Events("onMapIdle")
+      Events("onDidChange")
 
       //Animates camera to given location
       AsyncFunction("animateCamera") { (view: MapView, camera: Camera, animationOptions: AnimateOptions?) in

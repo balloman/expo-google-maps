@@ -6,6 +6,7 @@ import GoogleMaps
 class MapView: ExpoView, GMSMapViewDelegate {
   let mapView: GMSMapView?
   let onMapIdle = EventDispatcher()
+  let onDidChange = EventDispatcher()
   private var markers: [MarkerView] = []
   private var polygons: [String: GMSPolygon] = [:]
   var propPolygons: [Polygon] = []
@@ -90,9 +91,14 @@ class MapView: ExpoView, GMSMapViewDelegate {
   // MARK: MapViewDelegate
   
   func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
-    print("Map Idle", cameraPosition, cameraPosition.toCameraRecord())
     onMapIdle([
       "cameraPosition": cameraPosition.toCameraRecord().toDictionary()
+    ])
+  }
+  
+  func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+    onDidChange([
+      "cameraPosition": position.toCameraRecord().toDictionary()
     ])
   }
 }
