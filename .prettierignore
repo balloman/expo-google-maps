@@ -6,3 +6,4 @@
 **/.expo/
 *.md
 .github/*
+.vscode/*
