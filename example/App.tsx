@@ -52,12 +52,12 @@ export default function App() {
         styleJson={JSON.stringify(styleJson)}
         showUserLocation
         mapRef={mapViewRef}
-        onMapIdle={({ cameraPosition }) =>
-          console.log("cameraPosition", cameraPosition)
-        }
-        onDidChange={({ cameraPosition }) =>
-          console.log("onDidChange", cameraPosition)
-        }
+        // onMapIdle={({ cameraPosition }) =>
+        //   console.log("cameraPosition", cameraPosition)
+        // }
+        // onDidChange={({ cameraPosition }) =>
+        //   console.log("onDidChange", cameraPosition)
+        // }
         polygons={[
           {
             key: "1",
@@ -90,7 +90,16 @@ export default function App() {
             },
             title: "Hello World",
           }}
-        />
+        >
+          <View
+            style={{
+              alignItems: "center",
+              backgroundColor: "red",
+              width: 30,
+              height: 30,
+            }}
+          />
+        </MarkerView>
       </MapView>
       <View style={{ position: "absolute", top: "50%", alignSelf: "center" }}>
         <Button

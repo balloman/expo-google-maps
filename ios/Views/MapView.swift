@@ -37,6 +37,20 @@ class MapView: ExpoView, GMSMapViewDelegate {
     setPolygons(polygonRecords: propPolygons)
   }
   
+  override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
+    if (subview.isKind(of: MarkerView.self)) {
+      let markerView = subview as! MarkerView
+      markerView.setMap(withMap: mapView)
+    }
+  }
+  
+  override func removeReactSubview(_ subview: UIView!) {
+    if (subview.isKind(of: MarkerView.self)) {
+      let markerView = subview as! MarkerView
+      markerView.gmsMarker.map = nil
+    }
+  }
+  
   func animateCamera(to: GMSCameraPosition, animationOptions: AnimateOptions) {
     CATransaction.begin()
     CATransaction.setAnimationDuration(animationOptions.animationDuration)

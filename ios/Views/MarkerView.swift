@@ -15,31 +15,33 @@ class MarkerView: ExpoView {
       updateMarker()
     }
   }
-  private var gmsMarker: GMSMarker
+  var gmsMarker: GMSMarker
+  var iconView: UIView = UIView()
   
   required init (appContext: AppContext? = nil) {
     gmsMarker = GMSMarker()
     super.init(appContext: appContext)
-    clipsToBounds = true
   }
-  
-  override func layoutSubviews() {
-    
+
+  override func didAddSubview(_ subview: UIView) {
+    gmsMarker.iconView = subview
   }
-  
+
+  override func removeReactSubview(_ subview: UIView!) {
+    if (subview.nativeID == gmsMarker.iconView?.nativeID) {
+      gmsMarker.iconView = nil
+    }
+    super.removeReactSubview(subview)
+  }
+
   func setMap(withMap: GMSMapView?) {
     gmsMarker.map = withMap
   }
-  
+
   func updateMarker() {
     guard let uMarkerInfo = markerInfo else { return }
     gmsMarker.title = uMarkerInfo.title
     gmsMarker.userData = uMarkerInfo.key
-    gmsMarker.iconView = subviews.first
     gmsMarker.position = uMarkerInfo.position.toCoordinate2D()
-  }
-  
-  deinit {
-    gmsMarker.map = nil
   }
 }
