@@ -90,7 +90,17 @@ export default function App() {
             },
             title: "Hello World",
           }}
-        />
+          onMarkerPress={() => console.log("marker pressed")}
+        >
+          <View
+            style={{
+              alignItems: "center",
+              backgroundColor: "red",
+              width: 100,
+              height: 100,
+            }}
+          />
+        </MarkerView>
       </MapView>
       <View style={{ position: "absolute", top: "50%", alignSelf: "center" }}>
         <Button

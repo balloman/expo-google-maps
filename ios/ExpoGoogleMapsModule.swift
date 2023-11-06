@@ -9,6 +9,8 @@ public class ExpoGoogleMapsMarkerModule: Module {
       Prop("marker") { (view, marker: Marker) in
         view.markerInfo = marker
       }
+      
+      Events("onMarkerPress")
     }
   }
 }
