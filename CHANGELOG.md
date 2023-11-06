@@ -1,5 +1,15 @@
 # @balloman/expo-google-maps
 
+## 0.3.0
+
+### Minor Changes
+
+- [#16](https://github.com/balloman/expo-google-maps/pull/16) [`b67097d`](https://github.com/balloman/expo-google-maps/commit/b67097d8e7f99f75a8d7ed1a0da92ef96ee5f344) Thanks [@balloman](https://github.com/balloman)! - Add a prop for when a marker is pressed
+
+### Patch Changes
+
+- [#16](https://github.com/balloman/expo-google-maps/pull/16) [`b67097d`](https://github.com/balloman/expo-google-maps/commit/b67097d8e7f99f75a8d7ed1a0da92ef96ee5f344) Thanks [@balloman](https://github.com/balloman)! - Fix(for now) of markers that work but only allow markers that have a defined width and height
+
 ## 0.2.0
 
 ### Minor Changes
