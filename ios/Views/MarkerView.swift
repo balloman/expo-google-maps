@@ -21,6 +21,7 @@ class MarkerView: ExpoView {
   
   required init (appContext: AppContext? = nil) {
     gmsMarker = GMSMarker()
+    gmsMarker.tracksViewChanges = false
     super.init(appContext: appContext)
   }
 
