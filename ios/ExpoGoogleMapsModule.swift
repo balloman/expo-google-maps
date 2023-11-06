@@ -11,7 +11,6 @@ public class ExpoGoogleMapsMarkerModule: Module {
       }
       
       Prop("tracksViewChanges") { (view, tracks: Bool) in
-        print("tracksChanges", tracks)
         view.gmsMarker.tracksViewChanges = tracks
       }
       
