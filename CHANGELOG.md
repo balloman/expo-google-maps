@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.4.0
+
+### Minor Changes
+
+- [#18](https://github.com/balloman/expo-google-maps/pull/18) [`543b6f3`](https://github.com/balloman/expo-google-maps/commit/543b6f32540becad2cc0f476815ffc76e8e703c5) Thanks [@balloman](https://github.com/balloman)! - Add the ability to set tracks changes via prop
+
 ## 0.3.0
 
 ### Minor Changes
