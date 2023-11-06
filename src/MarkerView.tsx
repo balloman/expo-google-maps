@@ -16,6 +16,10 @@ export type MarkerViewProps = {
   marker: Marker;
   /** Called when the marker is pressed */
   onMarkerPress?: () => void;
+  /** Controls whether the icon for this marker should be redrawn every frame
+   * @default false
+   */
+  tracksViewChanges?: boolean;
   children?: React.ReactElement;
 };
 

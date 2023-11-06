@@ -10,6 +10,11 @@ public class ExpoGoogleMapsMarkerModule: Module {
         view.markerInfo = marker
       }
       
+      Prop("tracksViewChanges") { (view, tracks: Bool) in
+        print("tracksChanges", tracks)
+        view.gmsMarker.tracksViewChanges = tracks
+      }
+      
       Events("onMarkerPress")
     }
   }

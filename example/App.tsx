@@ -90,6 +90,7 @@ export default function App() {
             },
             title: "Hello World",
           }}
+          tracksViewChanges={false}
           onMarkerPress={() => console.log("marker pressed")}
         >
           <View
