@@ -7,7 +7,7 @@ class MapView: ExpoView, GMSMapViewDelegate {
   let mapView: GMSMapView?
   let onMapIdle = EventDispatcher()
   let onDidChange = EventDispatcher()
-  private var markers: [MarkerView] = []
+  private var markers: [String: MarkerView] = [:]
   private var polygons: [String: GMSPolygon] = [:]
   var propPolygons: [Polygon] = []
   
@@ -30,24 +30,24 @@ class MapView: ExpoView, GMSMapViewDelegate {
   
   override func layoutSubviews() {
     mapView?.frame = bounds
-    let markerViews = subviews.compactMap { ($0 as? MarkerView) }
-    markerViews.forEach {
-      $0.setMap(withMap: mapView)
-    }
     setPolygons(polygonRecords: propPolygons)
   }
   
   override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
     if (subview.isKind(of: MarkerView.self)) {
       let markerView = subview as! MarkerView
+      let key = markerView.gmsMarker.userData as! String
       markerView.setMap(withMap: mapView)
+      markers[key] = markerView
     }
   }
   
   override func removeReactSubview(_ subview: UIView!) {
     if (subview.isKind(of: MarkerView.self)) {
       let markerView = subview as! MarkerView
+      let key = markerView.gmsMarker.userData as! String
       markerView.gmsMarker.map = nil
+      markers.removeValue(forKey: key)
     }
   }
   
@@ -114,5 +114,12 @@ class MapView: ExpoView, GMSMapViewDelegate {
     onDidChange([
       "cameraPosition": position.toCameraRecord().toDictionary()
     ])
+  }
+  
+  func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+    let markerKey = marker.userData as! String
+    let markerView = markers[markerKey]
+    markerView?.onMarkerPress([:])
+    return true
   }
 }

@@ -14,6 +14,8 @@ export type Marker = {
 
 export type MarkerViewProps = {
   marker: Marker;
+  /** Called when the marker is pressed */
+  onMarkerPress?: () => void;
   children?: React.ReactElement;
 };
 

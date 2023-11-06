@@ -17,6 +17,7 @@ class MarkerView: ExpoView {
   }
   var gmsMarker: GMSMarker
   var iconView: UIView = UIView()
+  let onMarkerPress = EventDispatcher()
   
   required init (appContext: AppContext? = nil) {
     gmsMarker = GMSMarker()
