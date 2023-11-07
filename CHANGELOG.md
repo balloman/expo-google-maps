@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.4.1
+
+### Patch Changes
+
+- [#20](https://github.com/balloman/expo-google-maps/pull/20) [`5a17b05`](https://github.com/balloman/expo-google-maps/commit/5a17b05ba9bd9ea8fedd5125f4d200ab2794f303) Thanks [@balloman](https://github.com/balloman)! - Fixed markers not displaying correctly if the size wasn't set
+
 ## 0.4.0
 
 ### Minor Changes
