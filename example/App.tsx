@@ -6,7 +6,7 @@ import {
 } from "@balloman/expo-google-maps";
 import * as Location from "expo-location";
 import React, { useEffect } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 import styleJson from "./style.json";
 
@@ -96,11 +96,11 @@ export default function App() {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: "red",
-              width: 100,
-              height: 100,
+              backgroundColor: "blue",
             }}
-          />
+          >
+            <Text>Hello World</Text>
+          </View>
         </MarkerView>
       </MapView>
       <View style={{ position: "absolute", top: "50%", alignSelf: "center" }}>
