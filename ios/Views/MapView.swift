@@ -40,6 +40,7 @@ class MapView: ExpoView, GMSMapViewDelegate {
       markerView.setMap(withMap: mapView)
       markers[key] = markerView
     }
+    super.insertReactSubview(subview, at: atIndex)
   }
   
   override func removeReactSubview(_ subview: UIView!) {
@@ -49,6 +50,7 @@ class MapView: ExpoView, GMSMapViewDelegate {
       markerView.gmsMarker.map = nil
       markers.removeValue(forKey: key)
     }
+    super.removeReactSubview(subview)
   }
   
   func animateCamera(to: GMSCameraPosition, animationOptions: AnimateOptions) {
