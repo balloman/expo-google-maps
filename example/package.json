@@ -26,5 +26,9 @@
     "autolinking": {
       "nativeModulesDir": ".."
     }
+  },
+  "volta": {
+    "node": "18.18.2",
+    "yarn": "1.22.19"
   }
 }
