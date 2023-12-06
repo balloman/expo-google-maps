@@ -37,7 +37,7 @@ export type Insets = {
 export type FitToBoundsOptions = {
   topRight: Coordinate;
   bottomLeft: Coordinate;
-  /** The padding around the coordinates */
+  /** The padding around the coordinates. On android, only a single number is allowed, so the max of the insets is chosen */
   insets?: Insets;
 };
 

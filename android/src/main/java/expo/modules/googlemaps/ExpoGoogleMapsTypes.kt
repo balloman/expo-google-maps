@@ -76,6 +76,12 @@ class Insets : Record {
     val right: Double = 0.0
 }
 
+class FitToBoundsParams(
+    @Field val topRight: Coordinate,
+    @Field val bottomLeft: Coordinate,
+    @Field val insets: Insets?
+) : Record
+
 class AnimateOptions : Record {
     @Field
     val animationDuration: Double = 1.0

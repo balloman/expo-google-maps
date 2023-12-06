@@ -37,17 +37,6 @@ class ExpoGoogleMapsModule : Module() {
             //No-op
         }
 
-        // Defines a JavaScript function that always returns a Promise and whose native code
-        // is by default dispatched on the different thread than the JavaScript runtime runs on.
-        AsyncFunction("setValueAsync") { value: String ->
-            // Send an event to JavaScript.
-            sendEvent(
-                "onChange", mapOf(
-                    "value" to value
-                )
-            )
-        }
-
         // Enables the module to be used as a native view. Definition components that are accepted as part of
         // the view definition: Prop, Events.
         View(ExpoMapView::class) {
@@ -92,12 +81,37 @@ class ExpoGoogleMapsModule : Module() {
                 view.googleMap?.isMyLocationEnabled = showUserLocation
             }
 
-            AsyncFunction("animateCamera") { view: ExpoMapView, camera: Camera, animationOptions: AnimateOptions ->
-                view.googleMap?.animateCamera(
-                    CameraUpdateFactory.newCameraPosition(camera.toGmsCameraPosition()),
-                    (animationOptions.animationDuration * 1000).roundToInt(),
-                    null
-                )
+            AsyncFunction("animateCamera") { view: ExpoMapView, camera: Camera, animationOptions: AnimateOptions? ->
+                if (animationOptions == null) {
+                    view.googleMap?.moveCamera(
+                        CameraUpdateFactory.newCameraPosition(camera.toGmsCameraPosition())
+                    )
+                } else {
+                    view.googleMap?.animateCamera(
+                        CameraUpdateFactory.newCameraPosition(camera.toGmsCameraPosition()),
+                        (animationOptions.animationDuration * 1000).roundToInt(),
+                        null
+                    )
+                }
+            }
+
+            AsyncFunction("fitToBounds") { view: ExpoMapView, params: FitToBoundsParams, animationOptions: AnimateOptions? ->
+                val topRight = params.topRight.toLatLng()
+                val bottomLeft = params.bottomLeft.toLatLng()
+                var padding = 0
+                if (params.insets != null) {
+                    padding = arrayOf(
+                        params.insets.top.roundToInt(),
+                        params.insets.left.roundToInt(),
+                        params.insets.bottom.roundToInt(),
+                        params.insets.right.roundToInt()
+                    ).max()
+                }
+                if (animationOptions == null) {
+                    view.fitToBounds(topRight, bottomLeft, padding, AnimateOptions())
+                } else {
+                    view.fitToBounds(topRight, bottomLeft, padding, animationOptions)
+                }
             }
         }
     }

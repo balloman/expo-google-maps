@@ -113,6 +113,16 @@ export default function App() {
             );
           }}
         />
+        <Button
+          title="Fit to Bounds"
+          onPress={() => {
+            mapViewRef.current?.fitToBounds({
+              bottomLeft: { latitude: 37.78825, longitude: -122.44 },
+              topRight: { latitude: 37.792, longitude: -122.4324 },
+              insets: { top: 300 },
+            });
+          }}
+        />
       </View>
     </View>
   );

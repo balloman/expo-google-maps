@@ -10,9 +10,12 @@ import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener
 import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
+import expo.modules.googlemaps.AnimateOptions
 import expo.modules.googlemaps.Camera
 import expo.modules.googlemaps.PolygonRecord
 import expo.modules.kotlin.AppContext
@@ -22,11 +25,11 @@ import expo.modules.kotlin.views.ExpoView
 @SuppressLint("ViewConstructor")
 class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, appContext),
     OnMapReadyCallback, OnCameraIdleListener, OnCameraMoveListener {
+    private var polygonMap: MutableMap<String, Polygon> = mutableMapOf()
+    private var tempPolygons: List<PolygonRecord> = listOf()
     var googleMap: GoogleMap? = null
-    var polygonMap: MutableMap<String, Polygon> = mutableMapOf()
 
     // We need to store the polygons in a temp variable until the map is ready
-    var tempPolygons: List<PolygonRecord> = listOf()
     var styleJson: String? = null
     var camera: Camera? = null
     var showUserLocation: Boolean = false
@@ -112,6 +115,21 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
                 this.polygonMap[key] = googleMap!!.addPolygon(it.toOptions())
             }
         }
+    }
+
+    fun fitToBounds(
+        topRight: LatLng,
+        bottomLeft: LatLng,
+        padding: Int,
+        animateOptions: AnimateOptions
+    ) {
+        val bounds = LatLngBounds.builder()
+            .include(topRight)
+            .include(bottomLeft)
+            .build()
+        val update = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+        val duration = (animateOptions.animationDuration * 1000).toInt()
+        googleMap?.animateCamera(update, duration, null)
     }
 
     private fun PolygonRecord.toOptions(): PolygonOptions {
