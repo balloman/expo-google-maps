@@ -47,6 +47,9 @@ export type FitToBoundsOptions = {
 export type AnimationOptions = {
   /** The duration in seoncds */
   animationDuration?: number;
+  /** The animation function to use - ios only
+   * @platform ios
+   */
   animationFunction?:
     | "easeIn"
     | "easeOut"

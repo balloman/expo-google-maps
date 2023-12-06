@@ -83,6 +83,7 @@ android {
 
     namespace 'expo.modules.googlemaps.example'
     defaultConfig {
+        manifestPlaceholders = [ MAPS_API_KEY: "${System.env.API_KEY}"]
         applicationId 'expo.modules.googlemaps.example'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion

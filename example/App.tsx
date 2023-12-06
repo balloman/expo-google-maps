@@ -1,9 +1,4 @@
-import {
-  MapFunctions,
-  MapView,
-  MarkerView,
-  setApiKey,
-} from "@balloman/expo-google-maps";
+import { MapFunctions, MapView, setApiKey } from "@balloman/expo-google-maps";
 import * as Location from "expo-location";
 import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -72,7 +67,7 @@ export default function App() {
           },
         ]}
       >
-        <MarkerView
+        {/* <MarkerView
           marker={{
             key: "1",
             position: {
@@ -101,7 +96,7 @@ export default function App() {
           >
             <Text>Hello World</Text>
           </View>
-        </MarkerView>
+        </MarkerView> */}
       </MapView>
       <View style={{ position: "absolute", top: "50%", alignSelf: "center" }}>
         <Button
