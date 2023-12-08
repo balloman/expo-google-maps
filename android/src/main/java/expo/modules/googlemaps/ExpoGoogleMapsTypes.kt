@@ -5,9 +5,9 @@ import com.google.android.gms.maps.model.LatLng
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 
-class Marker : Record {
+class MarkerRecord : Record {
     @Field
-    val coordinate: Coordinate = Coordinate()
+    val position: Coordinate = Coordinate(0.0, 0.0)
 
     @Field
     val title: String = ""
@@ -30,7 +30,7 @@ class PolygonRecord : Record {
     val coordinates: Array<Coordinate> = arrayOf()
 }
 
-data class Coordinate(@Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) :
+data class Coordinate(@Field val latitude: Double, @Field val longitude: Double) :
     Record {
     fun toLatLng(): LatLng {
         return LatLng(latitude, longitude)

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
+import android.view.View
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener
@@ -27,6 +28,7 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
     OnMapReadyCallback, OnCameraIdleListener, OnCameraMoveListener {
     private var polygonMap: MutableMap<String, Polygon> = mutableMapOf()
     private var tempPolygons: List<PolygonRecord> = listOf()
+    private var tempMarkers: MutableList<ExpoMarkerView> = mutableListOf()
     var googleMap: GoogleMap? = null
 
     // We need to store the polygons in a temp variable until the map is ready
@@ -46,6 +48,23 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
         addView(mapView)
     }
 
+    override fun onViewAdded(child: View?) {
+        if (child is ExpoMarkerView && googleMap == null) {
+            tempMarkers.add(child)
+            return
+        } else if (child is ExpoMarkerView) {
+            val marker = googleMap!!.addMarker(child.toMarkerOptions())
+            if (marker == null) {
+                Log.e("ExpoGoogleMapsModule", "Failed to add marker")
+                return
+            }
+            child.gmsMarker = marker
+            child.gmsMap = googleMap
+            return
+        }
+        super.onViewAdded(child)
+    }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
         Log.e("ExpoGoogleMapsModule", "onMapReady")
@@ -61,6 +80,16 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
             googleMap!!.isMyLocationEnabled = true
         }
         updatePolygons(tempPolygons)
+        tempMarkers.forEach { markerView ->
+            val options = markerView.toMarkerOptions()
+            val marker = googleMap!!.addMarker(options)
+            if (marker == null) {
+                Log.e("ExpoGoogleMapsModule", "Failed to add marker")
+                return
+            }
+            markerView.gmsMarker = marker
+            markerView.gmsMap = googleMap
+        }
         googleMap!!.setOnCameraIdleListener(this)
         googleMap!!.setOnCameraMoveListener(this)
     }

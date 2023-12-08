@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MapStyleOptions
 import expo.modules.googlemaps.views.ExpoMapView
+import expo.modules.googlemaps.views.ExpoMarkerView
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.roundToInt
@@ -15,6 +16,14 @@ import kotlin.math.roundToInt
 class ExpoGoogleMapsMarkerModule : Module() {
     override fun definition() = ModuleDefinition {
         Name("ExpoGoogleMapsMarker")
+
+        View(ExpoMarkerView::class) {
+            Prop("marker") { view: ExpoMarkerView, marker: MarkerRecord ->
+                view.updateMarker(marker)
+            }
+
+            Events("onMarkerPress")
+        }
     }
 }
 

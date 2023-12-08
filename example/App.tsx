@@ -1,4 +1,9 @@
-import { MapFunctions, MapView, setApiKey } from "@balloman/expo-google-maps";
+import {
+  MapFunctions,
+  MapView,
+  MarkerView,
+  setApiKey,
+} from "@balloman/expo-google-maps";
 import * as Location from "expo-location";
 import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -10,6 +15,7 @@ setApiKey(process.env.EXPO_PUBLIC_API_KEY!);
 export default function App() {
   const mapViewRef = React.useRef<MapFunctions>(null);
   const [status, setStatus] = React.useState<Location.PermissionStatus>();
+  const [text, setText] = React.useState<string>("hi");
 
   useEffect(() => {
     Location.getForegroundPermissionsAsync()
@@ -50,9 +56,9 @@ export default function App() {
         onMapIdle={({ cameraPosition }) =>
           console.log("cameraPosition", cameraPosition)
         }
-        onDidChange={({ cameraPosition }) =>
-          console.log("onDidChange", cameraPosition)
-        }
+        // onDidChange={({ cameraPosition }) =>
+        //   console.log("onDidChange", cameraPosition)
+        // }
         polygons={[
           {
             key: "1",
@@ -67,13 +73,14 @@ export default function App() {
           },
         ]}
       >
-        {/* <MarkerView
+        <MarkerView
           marker={{
             key: "1",
             position: {
               latitude: 37.78825,
               longitude: -122.4324,
             },
+            title: "Hello World",
           }}
         />
         <MarkerView
@@ -83,7 +90,7 @@ export default function App() {
               latitude: 37.78825,
               longitude: -122.44,
             },
-            title: "Hello World",
+            title: "Testing",
           }}
           tracksViewChanges={false}
           onMarkerPress={() => console.log("marker pressed")}
@@ -94,9 +101,9 @@ export default function App() {
               backgroundColor: "blue",
             }}
           >
-            <Text>Hello World</Text>
+            <Text>{text}</Text>
           </View>
-        </MarkerView> */}
+        </MarkerView>
       </MapView>
       <View style={{ position: "absolute", top: "50%", alignSelf: "center" }}>
         <Button
@@ -116,6 +123,7 @@ export default function App() {
         <Button
           title="Fit to Bounds"
           onPress={() => {
+            setText("hello");
             mapViewRef.current?.fitToBounds({
               bottomLeft: { latitude: 37.78825, longitude: -122.44 },
               topRight: { latitude: 37.792, longitude: -122.4324 },
