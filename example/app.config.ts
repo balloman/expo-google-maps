@@ -35,5 +35,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-location",
+    [
+      "../app.plugin.js",
+      {
+        apiKey: process.env.API_KEY,
+      },
+    ],
   ],
 });

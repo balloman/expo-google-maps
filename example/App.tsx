@@ -15,6 +15,7 @@ setApiKey(process.env.EXPO_PUBLIC_API_KEY!);
 export default function App() {
   const mapViewRef = React.useRef<MapFunctions>(null);
   const [status, setStatus] = React.useState<Location.PermissionStatus>();
+  const [text, setText] = React.useState<string>("hi");
 
   useEffect(() => {
     Location.getForegroundPermissionsAsync()
@@ -55,9 +56,9 @@ export default function App() {
         onMapIdle={({ cameraPosition }) =>
           console.log("cameraPosition", cameraPosition)
         }
-        onDidChange={({ cameraPosition }) =>
-          console.log("onDidChange", cameraPosition)
-        }
+        // onDidChange={({ cameraPosition }) =>
+        //   console.log("onDidChange", cameraPosition)
+        // }
         polygons={[
           {
             key: "1",
@@ -79,6 +80,7 @@ export default function App() {
               latitude: 37.78825,
               longitude: -122.4324,
             },
+            title: "Hello World",
           }}
         />
         <MarkerView
@@ -88,7 +90,7 @@ export default function App() {
               latitude: 37.78825,
               longitude: -122.44,
             },
-            title: "Hello World",
+            title: "Testing",
           }}
           tracksViewChanges={false}
           onMarkerPress={() => console.log("marker pressed")}
@@ -99,7 +101,7 @@ export default function App() {
               backgroundColor: "blue",
             }}
           >
-            <Text>Hello World</Text>
+            <Text>{text}</Text>
           </View>
         </MarkerView>
       </MapView>
@@ -116,6 +118,17 @@ export default function App() {
                 animationDuration: 1,
               },
             );
+          }}
+        />
+        <Button
+          title="Fit to Bounds"
+          onPress={() => {
+            setText("hello");
+            mapViewRef.current?.fitToBounds({
+              bottomLeft: { latitude: 37.78825, longitude: -122.44 },
+              topRight: { latitude: 37.792, longitude: -122.4324 },
+              insets: { top: 300 },
+            });
           }}
         />
       </View>

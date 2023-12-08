@@ -37,7 +37,7 @@ export type Insets = {
 export type FitToBoundsOptions = {
   topRight: Coordinate;
   bottomLeft: Coordinate;
-  /** The padding around the coordinates */
+  /** The padding around the coordinates. On android, only a single number is allowed, so the max of the insets is chosen */
   insets?: Insets;
 };
 
@@ -47,6 +47,9 @@ export type FitToBoundsOptions = {
 export type AnimationOptions = {
   /** The duration in seoncds */
   animationDuration?: number;
+  /** The animation function to use - ios only
+   * @platform ios
+   */
   animationFunction?:
     | "easeIn"
     | "easeOut"

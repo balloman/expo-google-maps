@@ -10,7 +10,11 @@ module.exports = {
     {
       files: ["*.ts", "*.tsx", "*.d.ts"],
       parserOptions: {
-        project: ["./tsconfig.json", "./example/tsconfig.json"],
+        project: [
+          "./tsconfig.json",
+          "./example/tsconfig.json",
+          "./plugin/tsconfig.json",
+        ],
       },
     },
   ],
