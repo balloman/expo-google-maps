@@ -15,8 +15,7 @@ import expo.modules.kotlin.views.ExpoView
 
 @SuppressLint("ViewConstructor")
 class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
-    var markerRecord: MarkerRecord? = null
-        private set
+    private var markerRecord: MarkerRecord? = null
     var gmsMarker: Marker? = null
     var gmsMap: GoogleMap? = null
     private var bitmap: Bitmap? = null
@@ -50,6 +49,26 @@ class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(contex
             gmsMarker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap!!))
         }
         removeView(child)
+    }
+
+    // We need to override a lot of methods to make the view manager happy here
+    override fun getChildAt(index: Int): View {
+        if (child != null) return child!!
+        return super.getChildAt(index)
+    }
+
+    override fun removeViewAt(index: Int) {
+        if (child != null) {
+            child = null
+            gmsMarker?.setIcon(null)
+        } else {
+            super.removeViewAt(index)
+        }
+    }
+
+    override fun getChildCount(): Int {
+        if (child != null) return 1
+        return super.getChildCount()
     }
 
     private fun loadBitmapFromView(
