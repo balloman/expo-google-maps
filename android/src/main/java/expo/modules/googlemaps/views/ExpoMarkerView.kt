@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
+import androidx.core.view.isVisible
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
@@ -48,27 +49,15 @@ class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(contex
             bitmap = loadBitmapFromView(v, left, top, right, bottom)
             gmsMarker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap!!))
         }
-        removeView(child)
+        child?.isVisible = false
+        super.onViewAdded(child)
     }
 
-    // We need to override a lot of methods to make the view manager happy here
-    override fun getChildAt(index: Int): View {
-        if (child != null) return child!!
-        return super.getChildAt(index)
-    }
-
-    override fun removeViewAt(index: Int) {
-        if (child != null) {
-            child = null
-            gmsMarker?.setIcon(null)
-        } else {
-            super.removeViewAt(index)
-        }
-    }
-
-    override fun getChildCount(): Int {
-        if (child != null) return 1
-        return super.getChildCount()
+    override fun onViewRemoved(child: View?) {
+        this.child = null
+        bitmap = null
+        gmsMarker?.setIcon(null)
+        super.onViewRemoved(child)
     }
 
     private fun loadBitmapFromView(
