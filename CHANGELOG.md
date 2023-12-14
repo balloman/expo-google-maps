@@ -1,5 +1,19 @@
 # @balloman/expo-google-maps
 
+## 0.5.0
+
+### Minor Changes
+
+- [#36](https://github.com/balloman/expo-google-maps/pull/36) [`7afa151`](https://github.com/balloman/expo-google-maps/commit/7afa151ed8ea9d33d42bc6e8eb71ba11002801ca) Thanks [@balloman](https://github.com/balloman)! - Added android support!
+
+  Android should have all the support iOS has which includes
+
+  - Map Display
+    - Android has a different method of supplying the api key, so now it will need to be provided with an expo plugin
+  - Markers
+    - Support for custom views is here as well, but it might be a little buggy on the android side, so let me know if you encounter any issues
+  - Polygons
+
 ## 0.4.1
 
 ### Patch Changes
