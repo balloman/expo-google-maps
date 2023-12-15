@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.5.1
+
+### Patch Changes
+
+- [#42](https://github.com/balloman/expo-google-maps/pull/42) [`c5368c5`](https://github.com/balloman/expo-google-maps/commit/c5368c51ce29bb9323f1135c4b766a36938dd054) Thanks [@balloman](https://github.com/balloman)! - Fix onPress listener not triggering on android
+
 ## 0.5.0
 
 ### Minor Changes
