@@ -9,11 +9,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener
 import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
 import expo.modules.googlemaps.AnimateOptions
@@ -25,10 +27,11 @@ import expo.modules.kotlin.views.ExpoView
 
 @SuppressLint("ViewConstructor")
 class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, appContext),
-    OnMapReadyCallback, OnCameraIdleListener, OnCameraMoveListener {
+    OnMapReadyCallback, OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener {
     private var polygonMap: MutableMap<String, Polygon> = mutableMapOf()
     private var tempPolygons: List<PolygonRecord> = listOf()
     private var tempMarkers: MutableList<ExpoMarkerView> = mutableListOf()
+    private var markers: MutableMap<Marker, ExpoMarkerView> = hashMapOf()
     var googleMap: GoogleMap? = null
 
     // We need to store the polygons in a temp variable until the map is ready
@@ -59,13 +62,13 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
                 return
             }
             child.gmsMarker = marker
-            child.gmsMap = googleMap
+            markers[marker] = child
             return
         }
         super.onViewAdded(child)
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "PotentialBehaviorOverride")
     override fun onMapReady(map: GoogleMap) {
         Log.e("ExpoGoogleMapsModule", "onMapReady")
         googleMap = map
@@ -88,10 +91,11 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
                 return
             }
             markerView.gmsMarker = marker
-            markerView.gmsMap = googleMap
+            markers[marker] = markerView
         }
         googleMap!!.setOnCameraIdleListener(this)
         googleMap!!.setOnCameraMoveListener(this)
+        googleMap!!.setOnMarkerClickListener(this)
     }
 
     override fun onCameraIdle() {
@@ -108,6 +112,16 @@ class ExpoMapView(context: Context, appContext: AppContext) : ExpoView(context, 
                 "cameraPosition" to Camera.fromGmsCameraPosition(googleMap!!.cameraPosition)
             )
         )
+    }
+
+    override fun onMarkerClick(p0: Marker): Boolean {
+        val markerView = markers[p0]
+        if (markerView == null) {
+            Log.e("ExpoGoogleMapsModule", "Failed to find marker")
+            return false
+        }
+        markerView.onMarkerPress(mapOf())
+        return false
     }
 
     /**
