@@ -6,21 +6,21 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 import androidx.core.view.isVisible
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import expo.modules.googlemaps.MarkerRecord
 import expo.modules.kotlin.AppContext
+import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 
 @SuppressLint("ViewConstructor")
 class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
     private var markerRecord: MarkerRecord? = null
     var gmsMarker: Marker? = null
-    var gmsMap: GoogleMap? = null
     private var bitmap: Bitmap? = null
     private var child: View? = null
+    val onMarkerPress by EventDispatcher()
 
     fun updateMarker(marker: MarkerRecord) {
         markerRecord = marker
