@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.6.0
+
+### Minor Changes
+
+- [#56](https://github.com/balloman/expo-google-maps/pull/56) [`da7252b`](https://github.com/balloman/expo-google-maps/commit/da7252bc4b6dea45733732432092480e913aebbb) Thanks [@balloman](https://github.com/balloman)! - Add support for Expo SDK 50 (BREAKING)
+
 ## 0.5.1
 
 ### Patch Changes
