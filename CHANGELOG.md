@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.6.1
+
+### Patch Changes
+
+- [#58](https://github.com/balloman/expo-google-maps/pull/58) [`20cc98b`](https://github.com/balloman/expo-google-maps/commit/20cc98b2e49232683ba0d3a6017bce9f2f865b79) Thanks [@balloman](https://github.com/balloman)! - Remove key
+
 ## 0.6.0
 
 ### Minor Changes
