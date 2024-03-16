@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 0.7.0
+
+### Minor Changes
+
+- [#72](https://github.com/balloman/expo-google-maps/pull/72) [`5b78093`](https://github.com/balloman/expo-google-maps/commit/5b78093f9b9ce4529b7dd4170891dc05d74f63bb) Thanks [@balloman](https://github.com/balloman)! - Renamed the `apiKey` property to `androidApiKey` to clarify its specific use for Android configurations in the Google Maps SDK.
+
 ## 0.6.1
 
 ### Patch Changes
