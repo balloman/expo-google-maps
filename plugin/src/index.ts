@@ -4,9 +4,9 @@ import {
   withAndroidManifest,
 } from "@expo/config-plugins";
 
-const withAndroidApiKey: ConfigPlugin<{ apiKey: string }> = (
+const withAndroidApiKey: ConfigPlugin<{ androidApiKey: string }> = (
   config,
-  { apiKey },
+  { androidApiKey },
 ) => {
   config = withAndroidManifest(config, config => {
     const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
@@ -16,7 +16,7 @@ const withAndroidApiKey: ConfigPlugin<{ apiKey: string }> = (
     AndroidConfig.Manifest.addMetaDataItemToMainApplication(
       mainApplication,
       "com.google.android.geo.API_KEY",
-      apiKey,
+      androidApiKey,
     );
 
     return config;
