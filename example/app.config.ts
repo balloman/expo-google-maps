@@ -38,7 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "../app.plugin.js",
       {
-        apiKey: process.env.API_KEY,
+        androidApiKey: process.env.API_KEY,
       },
     ],
   ],
