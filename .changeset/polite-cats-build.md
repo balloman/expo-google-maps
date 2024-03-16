@@ -2,4 +2,4 @@
 "@balloman/expo-google-maps": minor
 ---
 
-Renamed the apiKey property to be androiApiKey to better reflect usage
+Renamed the `apiKey` property to `androidApiKey` to clarify its specific use for Android configurations in the Google Maps SDK.
