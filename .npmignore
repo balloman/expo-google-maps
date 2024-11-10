@@ -12,3 +12,4 @@ __tests__
 .gitignore
 .eslintrc.js
 .prettier*
+biome.json

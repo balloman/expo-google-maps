@@ -1,8 +1,8 @@
 import { requireNativeViewManager } from "expo-modules-core";
-import * as React from "react";
+import type * as React from "react";
 import { View } from "react-native";
 
-import { Coordinate } from "./ExpoGoogleMaps.types";
+import type { Coordinate } from "./ExpoGoogleMaps.types";
 
 export type Marker = {
   /** The position of the marker */

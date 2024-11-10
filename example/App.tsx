@@ -1,5 +1,5 @@
 import {
-  MapFunctions,
+  type MapFunctions,
   MapView,
   MarkerView,
   setApiKey,
@@ -10,6 +10,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 
 import styleJson from "./style.json";
 
+// biome-ignore lint/style/noNonNullAssertion: If the API key is not set, the app will crash
 setApiKey(process.env.EXPO_PUBLIC_API_KEY!);
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
       .then(({ status }) => {
         setStatus(status);
       })
-      .catch(e => {
+      .catch((e) => {
         if (e instanceof TypeError) {
           return;
         }
@@ -36,7 +37,7 @@ export default function App() {
         .then(({ status }) => {
           setStatus(status);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log("error", e);
         });
     }

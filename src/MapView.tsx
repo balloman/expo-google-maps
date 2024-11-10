@@ -1,8 +1,8 @@
 import { requireNativeViewManager } from "expo-modules-core";
-import * as React from "react";
-import { ViewProps } from "react-native";
+import type * as React from "react";
+import type { ViewProps } from "react-native";
 
-import {
+import type {
   AnimationOptions,
   Camera,
   FitToBoundsOptions,

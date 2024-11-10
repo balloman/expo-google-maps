@@ -1,6 +1,6 @@
 import {
   AndroidConfig,
-  ConfigPlugin,
+  type ConfigPlugin,
   withAndroidManifest,
 } from "@expo/config-plugins";
 
@@ -8,7 +8,8 @@ const withAndroidApiKey: ConfigPlugin<{ androidApiKey: string }> = (
   config,
   { androidApiKey },
 ) => {
-  config = withAndroidManifest(config, config => {
+  // biome-ignore lint/style/noParameterAssign: This is a plugin
+  config = withAndroidManifest(config, (config) => {
     const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
       config.modResults,
     );

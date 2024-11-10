@@ -5,6 +5,7 @@
     "paths": {
       "@balloman/expo-google-maps": ["../src/index"],
       "@balloman/expo-google-maps/*": ["../src/*"]
-    }
+    },
+    "resolveJsonModule": true
   }
 }
