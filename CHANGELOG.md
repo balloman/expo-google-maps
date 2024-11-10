@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 1.0.0
+
+### Major Changes
+
+- [`589770c`](https://github.com/balloman/expo-google-maps/commit/589770cad3fd4c94602fcba10fd3d55f3cad0ab5) Thanks [@balloman](https://github.com/balloman)! - Initial Release and support for sdk 51
+
 ## 0.7.0
 
 ### Minor Changes
