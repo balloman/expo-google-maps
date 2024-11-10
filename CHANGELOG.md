@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 1.0.2
+
+### Patch Changes
+
+- [`5182f37`](https://github.com/balloman/expo-google-maps/commit/5182f37202e1de6d455b2a2720c90feca931cb89) Thanks [@balloman](https://github.com/balloman)! - Actually restore prepare script
+
 ## 1.0.1
 
 ### Patch Changes
