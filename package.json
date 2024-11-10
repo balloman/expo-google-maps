@@ -11,7 +11,6 @@
     "format": "prettier --write .",
     "prettier:check": "prettier --check .",
     "test": "expo-module test",
-    "prepare": "expo-module prepare",
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "open -a \"Xcode\" example/ios",
