@@ -1,5 +1,11 @@
 # @balloman/expo-google-maps
 
+## 1.0.1
+
+### Patch Changes
+
+- [`b0cff96`](https://github.com/balloman/expo-google-maps/commit/b0cff969a13cf069ff083b6814c1d68452dcfb92) Thanks [@balloman](https://github.com/balloman)! - Fix the build folder not being generated
+
 ## 1.0.0
 
 ### Major Changes
