@@ -109,26 +109,30 @@ export default function App() {
         <Button
           title="Center"
           onPress={() => {
-            mapViewRef.current?.animateCamera(
-              {
-                center: { latitude: 37.78825, longitude: -122.44 },
-                zoom: 13,
-              },
-              {
-                animationDuration: 1,
-              },
-            );
+            mapViewRef.current
+              ?.animateCamera(
+                {
+                  center: { latitude: 37.78825, longitude: -122.44 },
+                  zoom: 13,
+                },
+                {
+                  animationDuration: 1,
+                },
+              )
+              .catch(console.error);
           }}
         />
         <Button
           title="Fit to Bounds"
           onPress={() => {
             setText("hello");
-            mapViewRef.current?.fitToBounds({
-              bottomLeft: { latitude: 37.78825, longitude: -122.44 },
-              topRight: { latitude: 37.792, longitude: -122.4324 },
-              insets: { top: 300 },
-            });
+            mapViewRef.current
+              ?.fitToBounds({
+                bottomLeft: { latitude: 37.78825, longitude: -122.44 },
+                topRight: { latitude: 37.792, longitude: -122.4324 },
+                insets: { top: 300 },
+              })
+              .catch(console.error);
           }}
         />
       </View>

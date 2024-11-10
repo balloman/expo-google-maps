@@ -1,9 +1,12 @@
-import { EventEmitter, NativeModulesProxy } from "expo-modules-core";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { EventEmitter } from "expo-modules-core";
 
 import ExpoGoogleMapsModule from "./ExpoGoogleMapsModule";
 
 const emitter = new EventEmitter(
-  ExpoGoogleMapsModule ?? NativeModulesProxy.ExpoGoogleMaps,
+  ExpoGoogleMapsModule,
 );
 
 emitter.addListener("log", event => {
