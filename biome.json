@@ -16,7 +16,8 @@
       "**/.expo/*",
       "**/*.config.mjs",
       "**/.vscode/*",
-      "**/*.plugin.js"
+      "**/*.plugin.js",
+      "**/.eslintrc.js"
     ]
   },
   "formatter": {
