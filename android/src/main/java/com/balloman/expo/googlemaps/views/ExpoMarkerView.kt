@@ -1,4 +1,4 @@
-package expo.modules.googlemaps.views
+package com.balloman.expo.googlemaps.views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import expo.modules.googlemaps.MarkerRecord
+import com.balloman.expo.googlemaps.MarkerRecord
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView

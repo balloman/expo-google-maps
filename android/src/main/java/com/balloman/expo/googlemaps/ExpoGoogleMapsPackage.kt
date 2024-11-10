@@ -1,4 +1,4 @@
-package expo.modules.googlemaps
+package com.balloman.expo.googlemaps
 
 import android.content.Context
 import expo.modules.core.interfaces.Package

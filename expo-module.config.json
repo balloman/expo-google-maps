@@ -5,8 +5,8 @@
   },
   "android": {
     "modules": [
-      "expo.modules.googlemaps.ExpoGoogleMapsModule",
-      "expo.modules.googlemaps.ExpoGoogleMapsMarkerModule"
+      "com.balloman.expo.googlemaps.ExpoGoogleMapsModule",
+      "com.balloman.expo.googlemaps.ExpoGoogleMapsMarkerModule"
     ]
   }
 }

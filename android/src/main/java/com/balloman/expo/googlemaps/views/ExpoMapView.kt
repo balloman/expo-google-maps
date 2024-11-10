@@ -1,4 +1,4 @@
-package expo.modules.googlemaps.views
+package com.balloman.expo.googlemaps.views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,9 +18,9 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
-import expo.modules.googlemaps.AnimateOptions
-import expo.modules.googlemaps.Camera
-import expo.modules.googlemaps.PolygonRecord
+import com.balloman.expo.googlemaps.AnimateOptions
+import com.balloman.expo.googlemaps.Camera
+import com.balloman.expo.googlemaps.PolygonRecord
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView

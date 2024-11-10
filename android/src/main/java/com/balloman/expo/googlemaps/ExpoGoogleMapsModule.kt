@@ -1,11 +1,11 @@
-package expo.modules.googlemaps
+package com.balloman.expo.googlemaps
 
 import android.annotation.SuppressLint
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MapStyleOptions
-import expo.modules.googlemaps.views.ExpoMapView
-import expo.modules.googlemaps.views.ExpoMarkerView
+import com.balloman.expo.googlemaps.views.ExpoMapView
+import com.balloman.expo.googlemaps.views.ExpoMarkerView
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlin.math.roundToInt

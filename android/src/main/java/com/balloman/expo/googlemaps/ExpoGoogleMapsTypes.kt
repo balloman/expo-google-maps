@@ -1,4 +1,4 @@
-package expo.modules.googlemaps
+package com.balloman.expo.googlemaps
 
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng

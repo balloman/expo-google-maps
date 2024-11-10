@@ -1,8 +1,8 @@
-package expo.modules.googlemaps
+package com.balloman.expo.googlemaps
 
 import android.app.Activity
 import expo.modules.core.interfaces.ReactActivityLifecycleListener
-import expo.modules.googlemaps.views.ExpoMapView
+import com.balloman.expo.googlemaps.views.ExpoMapView
 
 class ExpoGoogleMapsReactActivityLifecycleListener : ReactActivityLifecycleListener {
     override fun onPause(activity: Activity?) {
