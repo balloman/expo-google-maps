@@ -1,0 +1,12 @@
+{
+	"platforms": ["apple", "android"],
+	"apple": {
+		"modules": ["ExpoGoogleMapsModule", "ExpoGoogleMapsMarkerModule"]
+	},
+	"android": {
+		"modules": [
+			"com.balloman.expo.googlemaps.ExpoGoogleMapsModule",
+			"com.balloman.expo.googlemaps.ExpoGoogleMapsMarkerModule"
+		]
+	}
+}

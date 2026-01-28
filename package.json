@@ -1,54 +1,28 @@
 {
-  "name": "@balloman/expo-google-maps",
-  "version": "1.0.2",
-  "description": "An expo native module for google maps",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "name": "root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ]
+  },
+  "description": "",
   "scripts": {
-    "build": "expo-module build",
-    "clean": "expo-module clean",
     "lint": "biome check",
-    "test": "expo-module test",
-    "prepublishOnly": "expo-module prepublishOnly",
-    "prepare": "expo-module prepare",
-    "expo-module": "expo-module",
-    "open:ios": "open -a \"Xcode\" example/ios",
-    "open:android": "open -a \"Android Studio\" example/android"
+    "lint:fix": "biome check --fix"
   },
-  "keywords": [
-    "react-native",
-    "expo",
-    "@balloman/expo-google-maps",
-    "ExpoGoogleMaps"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/balloman/expo-google-maps.git"
-  },
-  "bugs": {
-    "url": "https://github.com/balloman/expo-google-maps/issues"
-  },
-  "author": "Bernard Allotey <ballotey01@gmail.com> (https://github.com/balloman)",
+  "author": "Bernard Allotey",
   "license": "MIT",
-  "homepage": "https://github.com/balloman/expo-google-maps#readme",
-  "dependencies": {},
+  "catalog": {
+    "@types/react": "^19.2.9",
+    "react-native": "0.81.5"
+  },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.1",
-    "@types/react": "^18.2.55",
-    "@types/react-native": "^0.73.0",
-    "expo-module-scripts": "^3.4.1",
-    "expo-modules-core": "^1.12.26",
-    "typescript": "^5.6.3"
-  },
-  "peerDependencies": {
-    "expo": "*",
-    "react": "*",
-    "react-native": "*"
-  },
-  "volta": {
-    "node": "18.18.2",
-    "yarn": "1.22.19"
+    "@biomejs/biome": "2.3.13",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
+    "typescript": "^5.9.3"
   }
 }
