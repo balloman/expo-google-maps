@@ -90,7 +90,7 @@ export default function Index() {
 						title: 'Hello World',
 					}}
 				/>
-				<MarkerView
+				{/*<MarkerView
 					marker={{
 						key: '2',
 						position: {
@@ -99,7 +99,7 @@ export default function Index() {
 						},
 						title: 'Testing',
 					}}
-					tracksViewChanges={false}
+					tracksViewChanges={true}
 					onMarkerPress={() => console.log('marker pressed')}
 				>
 					<View
@@ -110,7 +110,7 @@ export default function Index() {
 					>
 						<Text>{text}</Text>
 					</View>
-				</MarkerView>
+				</MarkerView>*/}
 			</MapView>
 		</View>
 	);

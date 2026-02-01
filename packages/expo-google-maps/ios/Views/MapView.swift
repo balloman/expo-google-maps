@@ -7,18 +7,23 @@ class MapView: ExpoView, GMSMapViewDelegate {
   let mapView: GMSMapView?
   let onMapIdle = EventDispatcher()
   let onDidChange = EventDispatcher()
+	private let mapOptions: GMSMapViewOptions
   private var markers: [String: MarkerView] = [:]
   private var polygons: [String: GMSPolygon] = [:]
   var propPolygons: [Polygon] = []
+	var mapId: String?
   
   required init (appContext: AppContext? = nil) {
     print("Initializing Map View")
-    let camera = GMSCameraPosition.camera(withLatitude: 37.42, longitude: -122.20, zoom: 14)
+		let tempOptions = GMSMapViewOptions()
+		tempOptions.camera = GMSCameraPosition(latitude: 37.42, longitude: -122.20, zoom: 14)
+		mapId.map { tempOptions.mapID = GMSMapID(identifier: $0)}
+		mapOptions = tempOptions
     if (!ExpoGoogleMapsModule.keySet) {
       appContext?.log("API Key not set, but can be set with setApiKey(). Attempting to display the map would crash the app")
       mapView = nil
     } else {
-      mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+      mapView = GMSMapView(options: mapOptions)
     }
     super.init(appContext: appContext)
     clipsToBounds = true
@@ -34,24 +39,43 @@ class MapView: ExpoView, GMSMapViewDelegate {
   }
   
   override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
-    if (subview.isKind(of: MarkerView.self)) {
-      let markerView = subview as! MarkerView
-      let key = markerView.gmsMarker.userData as! String
-      markerView.setMap(withMap: mapView)
-      markers[key] = markerView
-    }
+		print("Trying to insert subview...")
+    handleSubviewInsertion(subview: subview, index: atIndex)
     super.insertReactSubview(subview, at: atIndex)
   }
+	
+	override func insertSubview(_ view: UIView, at index: Int) {
+		handleSubviewInsertion(subview: view, index: index)
+		super.insertSubview(view, at: index)
+	}
   
   override func removeReactSubview(_ subview: UIView!) {
-    if (subview.isKind(of: MarkerView.self)) {
-      let markerView = subview as! MarkerView
-      let key = markerView.gmsMarker.userData as! String
-      markerView.gmsMarker.map = nil
-      markers.removeValue(forKey: key)
-    }
+    handleSubviewRemoval(subview: subview)
     super.removeReactSubview(subview)
   }
+	
+	override func willRemoveSubview(_ subview: UIView) {
+		handleSubviewRemoval(subview: subview)
+		super.willRemoveSubview(subview)
+	}
+	
+	func handleSubviewInsertion(subview: UIView, index: Int) {
+		if (subview.isKind(of: MarkerView.self)) {
+			let markerView = subview as! MarkerView
+			let key = markerView.gmsMarker.userData as! String
+			markerView.setMap(withMap: mapView)
+			markers[key] = markerView
+		}
+	}
+	
+	func handleSubviewRemoval(subview: UIView) {
+		if (subview.isKind(of: MarkerView.self)) {
+			let markerView = subview as! MarkerView
+			let key = markerView.gmsMarker.userData as! String
+			markerView.gmsMarker.map = nil
+			markers.removeValue(forKey: key)
+		}
+	}
   
   func animateCamera(to: GMSCameraPosition, animationOptions: AnimateOptions) {
     CATransaction.begin()

@@ -48,7 +48,7 @@ public class ExpoGoogleMapsModule: Module {
       }
 
       Prop("polygons") { (view, polygons: [Polygon]) in
-        view.propPolygons = polygons
+				view.propPolygons = polygons
       }
 
       Prop("styleJson") { (view, json: String?) in
@@ -70,6 +70,12 @@ public class ExpoGoogleMapsModule: Module {
           view.mapView?.isMyLocationEnabled = false
         }
       }
+			
+			Prop("mapId") { (view, mapId: String?) in
+				if (mapId != nil) {
+					view.mapId = mapId
+				}
+			}
       
       Events("onMapIdle")
       Events("onDidChange")
