@@ -1,7 +1,17 @@
 {
-	"platforms": ["apple", "android"],
+	"platforms": [
+		"apple",
+		"android"
+	],
+	"coreFeatures": [
+		"swiftui",
+		"compose"
+	],
 	"apple": {
-		"modules": ["ExpoGoogleMapsModule", "ExpoGoogleMapsMarkerModule"]
+		"modules": [
+			"ExpoGoogleMapsModule",
+			"ExpoGoogleMapsMarkerModule"
+		]
 	},
 	"android": {
 		"modules": [

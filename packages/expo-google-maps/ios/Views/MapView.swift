@@ -7,17 +7,15 @@ class MapView: ExpoView, GMSMapViewDelegate {
   let mapView: GMSMapView?
   let onMapIdle = EventDispatcher()
   let onDidChange = EventDispatcher()
-	private let mapOptions: GMSMapViewOptions
+	let mapOptions: GMSMapViewOptions
   private var markers: [String: MarkerView] = [:]
   private var polygons: [String: GMSPolygon] = [:]
   var propPolygons: [Polygon] = []
-	var mapId: String?
   
   required init (appContext: AppContext? = nil) {
     print("Initializing Map View")
 		let tempOptions = GMSMapViewOptions()
 		tempOptions.camera = GMSCameraPosition(latitude: 37.42, longitude: -122.20, zoom: 14)
-		mapId.map { tempOptions.mapID = GMSMapID(identifier: $0)}
 		mapOptions = tempOptions
     if (!ExpoGoogleMapsModule.keySet) {
       appContext?.log("API Key not set, but can be set with setApiKey(). Attempting to display the map would crash the app")

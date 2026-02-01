@@ -72,9 +72,7 @@ public class ExpoGoogleMapsModule: Module {
       }
 			
 			Prop("mapId") { (view, mapId: String?) in
-				if (mapId != nil) {
-					view.mapId = mapId
-				}
+				mapId.map { view.mapOptions.mapID = GMSMapID(identifier: $0) }
 			}
       
       Events("onMapIdle")

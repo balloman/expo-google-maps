@@ -21,7 +21,7 @@ setApiKey(env.EXPO_PUBLIC_API_KEY);
 export default function Index() {
 	const mapViewRef = React.useRef<MapFunctions>(null);
 	const [status, setStatus] = React.useState<Location.PermissionStatus>();
-	const [text, setText] = React.useState<string>('hi');
+	const [text] = React.useState<string>('hi');
 
 	useEffect(() => {
 		Location.getForegroundPermissionsAsync()
@@ -90,7 +90,7 @@ export default function Index() {
 						title: 'Hello World',
 					}}
 				/>
-				{/*<MarkerView
+				<MarkerView
 					marker={{
 						key: '2',
 						position: {
@@ -110,7 +110,7 @@ export default function Index() {
 					>
 						<Text>{text}</Text>
 					</View>
-				</MarkerView>*/}
+				</MarkerView>
 			</MapView>
 		</View>
 	);

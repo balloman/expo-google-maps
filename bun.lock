@@ -39,6 +39,9 @@
     "packages/expo-google-maps": {
       "name": "@balloman/expo-google-maps",
       "version": "1.0.2",
+      "dependencies": {
+        "expo-maps": "^0.12.10",
+      },
       "devDependencies": {
         "@expo/config-plugins": "54.0.4",
         "@types/react": "catalog:",
@@ -1078,6 +1081,8 @@
     "expo-linking": ["expo-linking@8.0.11", "", { "dependencies": { "expo-constants": "~18.0.12", "invariant": "^2.2.4" }, "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-+VSaNL5om3kOp/SSKO5qe6cFgfSIWnnQDSbA7XLs3ECkYzXRquk5unxNS3pg7eK5kNUmQ4kgLI7MhTggAEUBLA=="],
 
     "expo-location": ["expo-location@19.0.8", "", { "peerDependencies": { "expo": "*" } }, "sha512-H/FI75VuJ1coodJbbMu82pf+Zjess8X8Xkiv9Bv58ZgPKS/2ztjC1YO1/XMcGz7+s9DrbLuMIw22dFuP4HqneA=="],
+
+    "expo-maps": ["expo-maps@0.12.10", "", { "peerDependencies": { "expo": "*", "react": "*", "react-native": "*" } }, "sha512-GmfWoUqhV7MIj6vYiK/JoH9jaVHB3ktJprDLIL/5WhDbR7lxJLLMzH7dGjaUJx+gyMaBnzRRGzF0WJbY+1RYOw=="],
 
     "expo-module-scripts": ["expo-module-scripts@5.0.8", "", { "dependencies": { "@babel/cli": "^7.23.4", "@babel/plugin-transform-export-namespace-from": "^7.23.4", "@babel/preset-env": "^7.23.8", "@babel/preset-typescript": "^7.23.3", "@expo/npm-proofread": "^1.0.1", "@testing-library/react-native": "^13.2.0", "@tsconfig/node18": "^18.2.2", "@types/jest": "^29.2.1", "babel-plugin-dynamic-import-node": "^2.3.3", "babel-preset-expo": "~54.0.7", "commander": "^12.1.0", "eslint-config-universe": "^15.0.3", "glob": "^13.0.0", "jest-expo": "~54.0.13", "jest-snapshot-prettier": "npm:prettier@^2", "jest-watch-typeahead": "2.2.1", "resolve-workspace-root": "^2.0.0", "ts-jest": "~29.0.4", "typescript": "^5.9.2" }, "bin": { "expo-module": "bin/expo-module.js" } }, "sha512-3YkAic3E6QGQuNEIchq6/0GGSBwR2C70AhDUF7VI7/N3THwUpeqZrX20FxHKN95/wclHs1ljrGvRX+2YTgXxiw=="],
 
