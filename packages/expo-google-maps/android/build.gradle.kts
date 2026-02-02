@@ -6,7 +6,7 @@ plugins {
   id("com.android.library")
   id("com.diffplug.spotless") version "8.2.1"
   id("dev.detekt") version "2.0.0-alpha.2"
-  id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
+  id("org.jetbrains.kotlin.plugin.compose") version "2.1.20"
 }
 
 val packageJson =
@@ -76,9 +76,11 @@ repositories {
 dependencies {
   implementation("com.google.android.gms:play-services-maps:20.0.0")
   implementation("com.google.maps.android:android-maps-utils:4.0.0")
+  implementation("com.google.maps.android:maps-compose:6.10.0")
   val composeBom = platform("androidx.compose:compose-bom:2026.01.01")
   implementation(composeBom)
   implementation("androidx.compose.ui:ui")
+  implementation("androidx.compose.foundation:foundation")
 }
 
 spotless {
@@ -91,4 +93,6 @@ spotless {
 detekt {
   source.setFrom("src/main/java")
   basePath.set(projectDir)
+  buildUponDefaultConfig = true
+  config.setFrom(file("config/detekt/detekt.yml"))
 }

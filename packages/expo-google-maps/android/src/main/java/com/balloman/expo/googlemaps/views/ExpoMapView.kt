@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import com.balloman.expo.googlemaps.AnimateOptions
 import com.balloman.expo.googlemaps.Camera
+import com.balloman.expo.googlemaps.MS_TO_SECONDS
 import com.balloman.expo.googlemaps.PolygonRecord
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -55,6 +56,7 @@ class ExpoMapView(context: Context, appContext: AppContext) :
     addView(mapView)
   }
 
+  @Suppress("ReturnCount")
   override fun onViewAdded(child: View?) {
     // This lets us add the markers temporarily, while waiting for the map to be ready
     if (child is ExpoMarkerView && googleMap == null) {
@@ -166,7 +168,7 @@ class ExpoMapView(context: Context, appContext: AppContext) :
   ) {
     val bounds = LatLngBounds.builder().include(topRight).include(bottomLeft).build()
     val update = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-    val duration = (animateOptions.animationDuration * 1000).toInt()
+    val duration = (animateOptions.animationDuration * MS_TO_SECONDS).toInt()
     googleMap?.animateCamera(update, duration, null)
   }
 

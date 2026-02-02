@@ -43,11 +43,5 @@
     "expo": "*",
     "react": "*",
     "react-native": "*"
-  },
-  "dependencies": {
-    "expo-maps": "^0.12.10",
-    "expo": "~54.0.32",
-    "react": "19.1.0",
-    "react-native": "0.81.5"
   }
 }

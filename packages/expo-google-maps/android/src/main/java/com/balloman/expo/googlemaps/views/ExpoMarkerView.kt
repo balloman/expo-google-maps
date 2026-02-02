@@ -14,6 +14,8 @@ import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 
+const val MIN_WIDTH = 100
+
 @SuppressLint("ViewConstructor")
 class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
   private var markerRecord: MarkerRecord? = null
@@ -59,8 +61,8 @@ class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(contex
   }
 
   private fun loadBitmapFromView(view: View, left: Int, top: Int, right: Int, bottom: Int): Bitmap {
-    val width = if (right - left <= 0) 100 else right - left
-    val height = if (bottom - top <= 0) 100 else bottom - top
+    val width = if (right - left <= 0) MIN_WIDTH else right - left
+    val height = if (bottom - top <= 0) MIN_WIDTH else bottom - top
     val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val c = Canvas(b)
     view.draw(c)

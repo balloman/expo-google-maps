@@ -21,6 +21,10 @@ class PolygonRecord : Record {
   @Field val strokeColor: String = ""
 
   @Field val coordinates: Array<Coordinate> = arrayOf()
+
+  /** Gets the points of the polygon as a list of LatLngs */
+  val points
+    get() = coordinates.map { it.toLatLng() }.toList()
 }
 
 data class Coordinate(@Field val latitude: Double, @Field val longitude: Double) : Record {
@@ -55,6 +59,8 @@ data class Camera(
     }
   }
 }
+
+data class OnDidChangeEvent(@Field val cameraPosition: Camera) : Record
 
 class Insets : Record {
   @Field val top: Double = 0.0
