@@ -110,10 +110,10 @@ export default function Index() {
 						style={{
 							alignItems: 'center',
 							backgroundColor: 'blue',
-							width: markerWidth,
-							height: 100
+							padding: 20
 						}}
 					>
+						<Text>{`${text} ${markerWidth}`}</Text>
 					</View>
 				</MarkerView>
 			</MapView>

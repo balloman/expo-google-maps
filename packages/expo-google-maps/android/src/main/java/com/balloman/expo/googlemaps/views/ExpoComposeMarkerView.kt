@@ -12,17 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
-import androidx.core.view.children
 import androidx.core.view.drawToBitmap
 import com.balloman.expo.googlemaps.MarkerRecord
 import com.balloman.expo.googlemaps.jsLog
-import com.facebook.react.uimanager.PixelUtil.pxToDp
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.MarkerState.Companion.invoke
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ComposeProps
 import expo.modules.kotlin.views.ExpoComposeView
@@ -44,49 +39,21 @@ class ExpoComposeMarkerView(context: Context, appContext: AppContext) :
     if (markerRecord.key == "2") {
       jsLog("Rerendering...")
     }
-    val markerState = remember(markerRecord.key) { MarkerState() }
+    val markerState = remember { MarkerState() }
     LaunchedEffect(markerRecord.position) {
       markerState.position = markerRecord.position.toLatLng()
     }
+    val relevantView = children.value.firstOrNull()
+    val viewBitmap = relevantView?.drawToBitmap()
     Marker(
-      title = markerRecord.title,
-      tag = markerRecord.key,
-      state = markerState,
-      icon = BitmapDescriptorFactory.fromBitmap(viewBitmap),
+        title = markerRecord.title,
+        tag = markerRecord.key,
+        state = markerState,
+        icon = viewBitmap?.let { BitmapDescriptorFactory.fromBitmap(it) },
     )
-    when (val subviewValue = children.value.firstOrNull()) {
-      null -> Marker(title = markerRecord.title, tag = markerRecord.key, state = markerState)
-      else -> {
-        val viewBitmap = subviewValue.drawToBitmap()
-        val height = max(subviewValue.height.toFloat().pxToDp().dp, 100f.pxToDp().dp)
-        val width = max(subviewValue.width.toFloat().pxToDp().dp, 100f.pxToDp().dp)
-        //        MarkerComposable(
-        //            title = markerRecord.title,
-        //            tag = markerRecord.key,
-        //            state = markerState,
-        //        ) {
-        //          AndroidView(
-        //              factory = { subviewValue },
-        //              Modifier.size(
-        //                  width,
-        //                  height,
-        //              ),
-        //          )
-        //        }
-        Marker(
-            title = markerRecord.title,
-            tag = markerRecord.key,
-            state = markerState,
-            icon = BitmapDescriptorFactory.fromBitmap(viewBitmap),
-        )
-      }
-    }
   }
 
-  @Composable
-  override fun Content(modifier: Modifier) {
-    //    children.forEach { jsLog(it::class.qualifiedName) }
-  }
+  @Composable override fun Content(modifier: Modifier) {}
 
   override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
     if (child is ComposeView) {
