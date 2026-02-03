@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.balloman.expo.googlemaps.views.ExpoComposeMapView
 import com.balloman.expo.googlemaps.views.ExpoComposeMarkerView
+import com.balloman.expo.googlemaps.views.ExpoMarkerWrapperView
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -13,6 +14,13 @@ class ExpoGoogleMapsMarkerModule : Module() {
     Name("ExpoGoogleMapsMarker")
 
     View(ExpoComposeMarkerView::class) { Events("onMarkerPress") }
+  }
+}
+
+class ExpoGoogleMapsMarkerWrapperModule : Module() {
+  override fun definition() = ModuleDefinition {
+    Name("ExpoGoogleMapsMarkerWrapper")
+    View(ExpoMarkerWrapperView::class) {}
   }
 }
 

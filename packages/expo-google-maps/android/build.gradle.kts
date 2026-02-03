@@ -81,6 +81,7 @@ dependencies {
   implementation(composeBom)
   implementation("androidx.compose.ui:ui")
   implementation("androidx.compose.foundation:foundation")
+  implementation("com.facebook.react:react-android:0.81.5")
 }
 
 spotless {

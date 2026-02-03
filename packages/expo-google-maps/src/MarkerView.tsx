@@ -31,7 +31,7 @@ export function MarkerView(props: MarkerViewProps) {
 	return (
 		<NativeView {...props}>
 			{props.children && ( // Due to some weirdness with the native view, we need to wrap the children in an absolute view
-				<View style={{ position: 'absolute' }}>{props.children}</View>
+				<View style={{ position: 'absolute'}}>{props.children}</View>
 			)}
 		</NativeView>
 	);

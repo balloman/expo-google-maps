@@ -2,20 +2,20 @@ package com.balloman.expo.googlemaps.views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
+import androidx.core.view.children
 import com.balloman.expo.googlemaps.Camera
 import com.balloman.expo.googlemaps.Coordinate
-import com.balloman.expo.googlemaps.MarkerRecord
 import com.balloman.expo.googlemaps.OnDidChangeEvent
 import com.balloman.expo.googlemaps.PolygonRecord
 import com.google.android.gms.maps.GoogleMapOptions
@@ -23,8 +23,6 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polygon
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
@@ -51,7 +49,7 @@ class ExpoComposeMapView(context: Context, appContext: AppContext) :
   private val onMapIdle by EventDispatcher<OnDidChangeEvent>()
   private val onDidChange by EventDispatcher<OnDidChangeEvent>()
   private val mapOptions = GoogleMapOptions().apply { props.mapId.value?.let { mapId(it) } }
-  private val markersState: MutableState<List<MarkerRecord>> = mutableStateOf(listOf())
+  private val markerViews = mutableStateListOf<ExpoComposeMarkerView>()
   private lateinit var cameraState: CameraPositionState
   private var wasLoaded = mutableStateOf(false)
 
@@ -74,17 +72,27 @@ class ExpoComposeMapView(context: Context, appContext: AppContext) :
             ),
     ) {
       MapPolygons(props.polygons.value)
-      MapMarkers(markersState.value)
+      //      Children()
+      OtherMapMarkers()
+      //      MapMarkers()
     }
   }
 
-  override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
-    if (child is ExpoComposeMarkerView) {
-      markersState.value += child.props.marker.value
-    } else {
-      super.addView(child, index, params)
-    }
-  }
+  //  override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
+  //    if (child is ExpoComposeMarkerView) {
+  //      markerViews.add(child)
+  //    } else {
+  //      super.addView(child, -1, params)
+  //    }
+  //  }
+  //
+  //  override fun removeView(view: View) {
+  //    if (view is ExpoComposeMarkerView) {
+  //      markerViews.remove(view)
+  //    } else {
+  //      super.removeView(view)
+  //    }
+  //  }
 
   @Composable
   private fun updateCameraState(): CameraPositionState {
@@ -123,11 +131,66 @@ class ExpoComposeMapView(context: Context, appContext: AppContext) :
     }
   }
 
+  //  @Composable
+  //  private fun MapMarkers() {
+  //
+  //    children.filterIsInstance<ExpoComposeMarkerView>().forEach {
+  //      appContext.jsLogger?.info("Updating marker")
+  //      val subview = it.subview.value
+  //      val markerRecord by it.props.marker
+  //      val markerState = remember(markerRecord.key) { MarkerState() }
+  //      LaunchedEffect(markerRecord.position) {
+  //        markerState.position = markerRecord.position.toLatLng()
+  //      }
+  //      when (subview) {
+  //        null -> Marker(title = markerRecord.title, state = markerState, tag = markerRecord.key)
+  //        else -> {
+  //          //          it.removeView(subview)
+  //          Marker(
+  //              //              content = { subview.Content(Modifier) },
+  //              title = markerRecord.title,
+  //              state = markerState,
+  //              tag = markerRecord.key,
+  //          )
+  //        }
+  //      }
+  //    }
+
+  //    markerViews.forEach { markerView ->
+  //      val markerRecord by markerView.props.marker
+  //      val markerSubview = markerView.subview
+  //      val markerState = remember(markerRecord.key) { MarkerState() }
+  //
+  //      LaunchedEffect(markerRecord.position) {
+  //        markerState.position = markerRecord.position.toLatLng()
+  //      }
+  //
+  //      //      Marker(title = markerRecord.title, tag = markerRecord.key, state = markerState)
+  //
+  //      if (markerSubview != null) {
+  //        MarkerComposable(
+  //            content = {
+  //              AndroidView(
+  //                  factory = { markerSubview },
+  //                  Modifier.size(
+  //                      markerSubview.width.toFloat().pxToDp().dp,
+  //                      markerSubview.height.toFloat().pxToDp().dp,
+  //                  ),
+  //              )
+  //            },
+  //            title = markerRecord.title,
+  //            tag = markerRecord.key,
+  //            state = markerState,
+  //        )
+  //      } else {
+  //        Marker(title = markerRecord.title, tag = markerRecord.key, state = markerState)
+  //      }
+  //    }
+  //  }
+
   @Composable
-  private fun MapMarkers(markerState: List<MarkerRecord>) {
-    markerState.forEach {
-      Marker(title = it.title, tag = it.key, state = MarkerState(position = it.position.toLatLng()))
-    }
+  private fun OtherMapMarkers() {
+    children.filterIsInstance<ExpoComposeMarkerView>().forEach { it.MarkerComposableWrapper() }
   }
 }
 

@@ -6,7 +6,7 @@ import {
 } from '@balloman/expo-google-maps';
 import * as Location from 'expo-location';
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Button, Dimensions, Text, View } from 'react-native';
 import * as z from 'zod';
 import styleJson from '../style.json';
 
@@ -21,7 +21,9 @@ setApiKey(env.EXPO_PUBLIC_API_KEY);
 export default function Index() {
 	const mapViewRef = React.useRef<MapFunctions>(null);
 	const [status, setStatus] = React.useState<Location.PermissionStatus>();
-	const [text] = React.useState<string>('hi');
+	const [text, setText] = React.useState<string>('hello');
+	const [markerPos, setMarkerPos] = React.useState<number>(37.78825);
+	const [markerWidth, setMarkerWidth] = React.useState(25);
 
 	useEffect(() => {
 		Location.getForegroundPermissionsAsync()
@@ -52,6 +54,8 @@ export default function Index() {
 		<View
 			style={{
 				flex: 1,
+				justifyContent: "center",
+				alignItems: "center"
 			}}
 		>
 			<MapView
@@ -59,7 +63,7 @@ export default function Index() {
 					center: { latitude: 37.78825, longitude: -122.4324 },
 					zoom: 13,
 				}}
-				style={{ flex: 1 }}
+				style={{ position: 'absolute', width: "100%", height: "100%" }}
 				mapRef={mapViewRef}
 				showUserLocation
 				styleJson={JSON.stringify(styleJson)}
@@ -84,7 +88,7 @@ export default function Index() {
 					marker={{
 						key: '1',
 						position: {
-							latitude: 37.78825,
+							latitude: markerPos,
 							longitude: -122.4324,
 						},
 						title: 'Hello World',
@@ -94,7 +98,7 @@ export default function Index() {
 					marker={{
 						key: '2',
 						position: {
-							latitude: 37.78825,
+							latitude: markerPos,
 							longitude: -122.44,
 						},
 						title: 'Testing',
@@ -106,12 +110,21 @@ export default function Index() {
 						style={{
 							alignItems: 'center',
 							backgroundColor: 'blue',
+							width: markerWidth,
+							height: 100
 						}}
 					>
-						<Text>{text}</Text>
 					</View>
 				</MarkerView>
 			</MapView>
+			<View>
+						<Button title='Hello World' onPress={() => {
+							setText("Clicked!")
+							setMarkerPos(prev => prev + 0.005)
+							setMarkerWidth(prev => prev + 5)
+							console.log("Clicked")
+						}} />
+			</View>
 		</View>
 	);
 }
