@@ -2,8 +2,10 @@ package com.balloman.expo.googlemaps
 
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
+import kotlin.math.roundToInt
 
 class MarkerRecord : Record {
   @Field val position: Coordinate = Coordinate(0.0, 0.0)
@@ -70,13 +72,34 @@ class Insets : Record {
   @Field val bottom: Double = 0.0
 
   @Field val right: Double = 0.0
+
+  fun toBounds(): LatLngBounds = LatLngBounds(LatLng(left, bottom), LatLng(right, top))
 }
 
 class FitToBoundsParams(
     @Field val topRight: Coordinate,
     @Field val bottomLeft: Coordinate,
     @Field val insets: Insets?,
-) : Record
+) : Record {
+
+  data class CameraBounds(val bounds: LatLngBounds, val padding: Int)
+
+  fun toLatLngBounds(): CameraBounds {
+    val bounds =
+        LatLngBounds.builder().include(topRight.toLatLng()).include(bottomLeft.toLatLng()).build()
+    val padding =
+        if (insets != null) {
+          arrayOf(
+                  insets.top.roundToInt(),
+                  insets.bottom.roundToInt(),
+                  insets.left.roundToInt(),
+                  insets.right.roundToInt(),
+              )
+              .max()
+        } else 0
+    return FitToBoundsParams.CameraBounds(bounds, padding)
+  }
+}
 
 class AnimateOptions : Record {
   @Field val animationDuration: Double = 1.0

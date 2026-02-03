@@ -2,70 +2,69 @@ package com.balloman.expo.googlemaps.views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.view.View
-import androidx.core.view.isVisible
+import android.view.ViewGroup
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.core.view.drawToBitmap
 import com.balloman.expo.googlemaps.MarkerRecord
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
-import expo.modules.kotlin.views.ExpoView
+import expo.modules.kotlin.views.ComposeProps
+import expo.modules.kotlin.views.ExpoComposeView
 
-const val MIN_WIDTH = 100
+data class ExpoMarkerViewProps(
+    val marker: MutableState<MarkerRecord> = mutableStateOf(MarkerRecord()),
+    val tracksViewChanges: MutableState<Boolean> = mutableStateOf(false),
+) : ComposeProps
 
+/** A class for the marker view in Android using Jetpack Compose. */
 @SuppressLint("ViewConstructor")
-class ExpoMarkerView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
-  private var markerRecord: MarkerRecord? = null
-  var gmsMarker: Marker? = null
-  private var bitmap: Bitmap? = null
-  private var child: View? = null
-  val onMarkerPress by EventDispatcher()
+class ExpoMarkerView(context: Context, appContext: AppContext) :
+    ExpoComposeView<ExpoMarkerViewProps>(context, appContext, withHostingView = true) {
+  override val props = ExpoMarkerViewProps()
+  private val children: MutableState<List<View>> = mutableStateOf(listOf())
+  private val onMarkerPress by EventDispatcher()
 
-  fun updateMarker(marker: MarkerRecord) {
-    markerRecord = marker
-    gmsMarker?.position = marker.position.toLatLng()
-    gmsMarker?.title = marker.title
-  }
-
-  fun toMarkerOptions(): MarkerOptions {
-    var markerOptions = MarkerOptions()
-    if (markerRecord == null) {
-      return markerOptions
+  @Composable
+  fun MarkerComposableWrapper() {
+    val markerRecord by props.marker
+    val markerState = remember { MarkerState() }
+    LaunchedEffect(markerRecord.position) {
+      markerState.position = markerRecord.position.toLatLng()
     }
-    markerOptions =
-        MarkerOptions().position(markerRecord!!.position.toLatLng()).title(markerRecord!!.title)
-    if (bitmap != null) {
-      markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap!!))
+    val relevantView = children.value.firstOrNull()
+    val viewBitmap =
+        if (props.tracksViewChanges.value) relevantView?.drawToBitmap()
+        else remember { relevantView?.drawToBitmap() }
+    Marker(
+        title = markerRecord.title,
+        tag = markerRecord.key,
+        state = markerState,
+        icon = viewBitmap?.let { BitmapDescriptorFactory.fromBitmap(it) },
+        onClick = {
+          onMarkerPress(emptyMap())
+          return@Marker true
+        },
+    )
+  }
+
+  @Composable override fun Content(modifier: Modifier) {}
+
+  override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
+    if (child is ComposeView) {
+      super.addView(child, index, params)
+    } else {
+      children.value += child
     }
-    return markerOptions
-  }
-
-  override fun onViewAdded(child: View?) {
-    this.child = child
-    child?.addOnLayoutChangeListener { v, left, top, right, bottom, _, _, _, _ ->
-      bitmap = loadBitmapFromView(v, left, top, right, bottom)
-      gmsMarker?.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap!!))
-    }
-    child?.isVisible = false
-    super.onViewAdded(child)
-  }
-
-  override fun onViewRemoved(child: View?) {
-    this.child = null
-    bitmap = null
-    gmsMarker?.setIcon(null)
-    super.onViewRemoved(child)
-  }
-
-  private fun loadBitmapFromView(view: View, left: Int, top: Int, right: Int, bottom: Int): Bitmap {
-    val width = if (right - left <= 0) MIN_WIDTH else right - left
-    val height = if (bottom - top <= 0) MIN_WIDTH else bottom - top
-    val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val c = Canvas(b)
-    view.draw(c)
-    return b
   }
 }

@@ -119,9 +119,16 @@ export default function Index() {
 			</MapView>
 			<View>
 						<Button title='Hello World' onPress={() => {
-							setText("Clicked!")
-							setMarkerPos(prev => prev + 0.005)
-							setMarkerWidth(prev => prev + 5)
+							mapViewRef.current?.animateCamera({ 
+								center: {
+									latitude: 35,
+									longitude: 35
+								},
+								zoom: 7,
+								viewingAngle: 40
+							}, {
+								animationDuration: 2
+							})
 							console.log("Clicked")
 						}} />
 			</View>
