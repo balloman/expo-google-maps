@@ -13,7 +13,9 @@
 			"!node_modules/",
 			"!**/package.json",
 			"!**/.zed",
-			"!**/.changeset"
+			"!**/.changeset",
+			"!apps/example-app/android/",
+			"!apps/example-app/ios/"
 		]
 	},
 	"formatter": {

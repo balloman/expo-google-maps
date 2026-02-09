@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "build": "expo-module build",
+    "build": "tsc --build",
     "clean": "expo-module clean",
     "lint": "biome check",
     "test": "expo-module test",

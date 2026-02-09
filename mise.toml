@@ -1,4 +1,43 @@
+#:schema https://mise.jdx.dev/schema/mise.json
+
 [tools]
 bun = "1.3.6"
+"gem:xcpretty" = "latest"
 java = "zulu-17"
 node = "24"
+ruby = "3.4"
+
+
+[tasks.lint-ts]
+description = "Lint the typescript code"
+run = "bun lint"
+[tasks.build-module]
+description = "Builds the module"
+run = "bun run --filter @balloman/expo-google-maps build"
+depends = ["lint-ts"]
+[tasks.build-app-ts]
+description = "Builds the typescript of the example app"
+run = "bun run --filter example-app tsc:build"
+sources = ['apps/example-app/app/**']
+depends = ["lint-ts"]
+[tasks.prebuild]
+description = "Runs Expo Prebuild"
+run = "bunx expo prebuild"
+sources = ['apps/example-app/**', 'packages/expo-google-maps/**']
+depends = ["build-module"]
+dir = "{{ config_root }}/apps/example-app"
+[tasks.build-android]
+description = "Builds the android app"
+run = "./gradlew build"
+sources = ['**/package.json', 'bun.lock', '**/android/**']
+dir = "{{ config_root }}/apps/example-app/android"
+depends = ["prebuild"]
+[tasks.build-ios]
+description = "Builds the ios app"
+run = "xcodebuild -scheme exampleapp -destination 'generic/platform=iOS Simulator' -workspace exampleapp.xcworkspace | xcpretty && exit ${PIPESTATUS[0]}"
+dir = "{{ config_root }}/apps/example-app/ios"
+sources = ['**/package.json', 'bun.lock', '**/ios/**']
+depends = ["prebuild"]
+[tasks.build]
+description = "Builds the whole project"
+depends = ["build-module", "build-android", "build-ios", "build-app-ts"]

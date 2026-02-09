@@ -6,7 +6,7 @@ import {
 } from '@balloman/expo-google-maps';
 import * as Location from 'expo-location';
 import React, { useEffect } from 'react';
-import { Button, Dimensions, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import * as z from 'zod';
 import styleJson from '../style.json';
 
@@ -21,9 +21,9 @@ setApiKey(env.EXPO_PUBLIC_API_KEY);
 export default function Index() {
 	const mapViewRef = React.useRef<MapFunctions>(null);
 	const [status, setStatus] = React.useState<Location.PermissionStatus>();
-	const [text, setText] = React.useState<string>('hello');
-	const [markerPos, setMarkerPos] = React.useState<number>(37.78825);
-	const [markerWidth, setMarkerWidth] = React.useState(25);
+	const [text] = React.useState<string>('hello');
+	const [markerPos] = React.useState<number>(37.78825);
+	const [markerWidth] = React.useState(25);
 
 	useEffect(() => {
 		Location.getForegroundPermissionsAsync()
@@ -54,8 +54,8 @@ export default function Index() {
 		<View
 			style={{
 				flex: 1,
-				justifyContent: "center",
-				alignItems: "center"
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}
 		>
 			<MapView
@@ -63,7 +63,7 @@ export default function Index() {
 					center: { latitude: 37.78825, longitude: -122.4324 },
 					zoom: 13,
 				}}
-				style={{ position: 'absolute', width: "100%", height: "100%" }}
+				style={{ position: 'absolute', width: '100%', height: '100%' }}
 				mapRef={mapViewRef}
 				showUserLocation
 				styleJson={JSON.stringify(styleJson)}
@@ -110,7 +110,7 @@ export default function Index() {
 						style={{
 							alignItems: 'center',
 							backgroundColor: 'blue',
-							padding: 20
+							padding: 20,
 						}}
 					>
 						<Text>{`${text} ${markerWidth}`}</Text>
@@ -118,19 +118,25 @@ export default function Index() {
 				</MarkerView>
 			</MapView>
 			<View>
-						<Button title='Hello World' onPress={() => {
-							mapViewRef.current?.animateCamera({ 
+				<Button
+					title="Hello World"
+					onPress={() => {
+						mapViewRef.current?.animateCamera(
+							{
 								center: {
 									latitude: 35,
-									longitude: 35
+									longitude: 35,
 								},
 								zoom: 7,
-								viewingAngle: 40
-							}, {
-								animationDuration: 2
-							})
-							console.log("Clicked")
-						}} />
+								viewingAngle: 40,
+							},
+							{
+								animationDuration: 2,
+							},
+						);
+						console.log('Clicked');
+					}}
+				/>
 			</View>
 		</View>
 	);

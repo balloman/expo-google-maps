@@ -1,9 +1,10 @@
 import ExpoGoogleMapsModule from './ExpoGoogleMapsModule';
 
-ExpoGoogleMapsModule.addListener('log', (event) => {
-	console.log(event);
-});
-
+/**
+ * Sets the api key for the application instance
+ * @param key The key to set
+ * @platform android
+ */
 export function setApiKey(key: string) {
 	ExpoGoogleMapsModule.setApiKey(key);
 }

@@ -2,12 +2,6 @@ package com.balloman.expo.googlemaps
 
 import expo.modules.kotlin.views.ExpoComposeView
 
-enum class LogLevel {
-  INFO,
-  WARN,
-  ERROR,
-}
-
 fun ExpoComposeView<*>.jsLog(message: String?, level: LogLevel = LogLevel.INFO) {
   this.appContext.jsLogger?.let {
     val logFunction: (String) -> Any =
@@ -18,4 +12,10 @@ fun ExpoComposeView<*>.jsLog(message: String?, level: LogLevel = LogLevel.INFO) 
         }
     logFunction(message ?: "")
   }
+}
+
+enum class LogLevel {
+  INFO,
+  WARN,
+  ERROR,
 }

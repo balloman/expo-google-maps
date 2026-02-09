@@ -54,6 +54,10 @@ export default (): ExpoConfig => ({
 				ios: {
 					deploymentTarget: '16.0',
 				},
+				android: {
+					targetSdkVersion: 33,
+					minSdkVersion: 33,
+				},
 			},
 		],
 		'expo-location',

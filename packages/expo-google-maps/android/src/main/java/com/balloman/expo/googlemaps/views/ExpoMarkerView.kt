@@ -58,7 +58,10 @@ class ExpoMarkerView(context: Context, appContext: AppContext) :
     )
   }
 
-  @Composable override fun Content(modifier: Modifier) {}
+  @Composable
+  override fun Content(modifier: Modifier) {
+    // no-op
+  }
 
   override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
     if (child is ComposeView) {
