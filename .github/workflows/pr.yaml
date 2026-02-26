@@ -40,8 +40,9 @@ jobs:
       - name: Setup expo
         uses: expo/expo-github-action@v8
         with:
-          package: bun
+          packager: bun
           eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build Android
         run: mise build-android
@@ -63,8 +64,9 @@ jobs:
       - name: Setup expo
         uses: expo/expo-github-action@v8
         with:
-          package: bun
+          packager: bun
           eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS
         run: mise build-ios
