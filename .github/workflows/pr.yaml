@@ -1,29 +1,70 @@
 name: "Pull Request Workflow"
 on:
+  push:
   pull_request:
     branches:
       - main
 
 jobs:
-  lint:
-    name: Lint
+  build-module:
+    name: Builds the expo module code
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-          cache: "yarn"
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
 
       - name: Install Node.js Dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install
 
-      - name: Install Example Dependencies
-        run: yarn --cwd example install --frozen-lockfile
+      - name: Build Module
+        run: "mise run build-module ::: build-app-ts"
 
-      - name: Run Biome
-        run: yarn lint
+  build-android:
+    name: Build on Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
+
+      - name: Install Node.js Dependencies
+        run: bun install
+
+      - name: Setup expo
+        uses: expo/expo-github-action@v8
+        with:
+          package: bun
+          eas-version: latest
+
+      - name: Build Android
+        run: mise build-android
+
+  build-ios:
+    name: Build on iOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
+
+      - name: Install Node.js Dependencies
+        run: bun install
+
+      - name: Setup expo
+        uses: expo/expo-github-action@v8
+        with:
+          package: bun
+          eas-version: latest
+
+      - name: Build iOS
+        run: mise build-ios
