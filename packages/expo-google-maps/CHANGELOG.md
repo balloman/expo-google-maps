@@ -1,5 +1,24 @@
 # @balloman/expo-google-maps
 
+## 2.0.0
+
+### Major Changes
+
+- [#125](https://github.com/balloman/expo-google-maps/pull/125) [`30a7adb`](https://github.com/balloman/expo-google-maps/commit/30a7adb43caeb3bf43fcd25764688954aacb789d) Thanks [@balloman](https://github.com/balloman)! - Updated to support new architecture
+
+  - Updated to the new method of expo modules
+  - Swapped to using Bun
+  - Updated to support Expo 54
+  - Updated to require iOS 16
+
+  ## Breaking
+
+  This module now requires the new architecture, it doesn't support Expo old architecture
+
+### Minor Changes
+
+- [#125](https://github.com/balloman/expo-google-maps/pull/125) [`30a7adb`](https://github.com/balloman/expo-google-maps/commit/30a7adb43caeb3bf43fcd25764688954aacb789d) Thanks [@balloman](https://github.com/balloman)! - Updated the readme to have good examples
+
 ## 1.0.2
 
 ### Patch Changes
