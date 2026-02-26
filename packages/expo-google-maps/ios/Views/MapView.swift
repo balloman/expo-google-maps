@@ -13,10 +13,8 @@ class MapView: ExpoView, GMSMapViewDelegate {
   var propPolygons: [Polygon] = []
   
   required init (appContext: AppContext? = nil) {
-    print("Initializing Map View")
-		let tempOptions = GMSMapViewOptions()
-		tempOptions.camera = GMSCameraPosition(latitude: 37.42, longitude: -122.20, zoom: 14)
-		mapOptions = tempOptions
+    mapOptions = GMSMapViewOptions()
+    mapOptions.camera = GMSCameraPosition(latitude: 37.42, longitude: -122.20, zoom: 14)
     if (!ExpoGoogleMapsModule.keySet) {
       appContext?.log("API Key not set, but can be set with setApiKey(). Attempting to display the map would crash the app")
       mapView = nil
@@ -36,45 +34,48 @@ class MapView: ExpoView, GMSMapViewDelegate {
     setPolygons(polygonRecords: propPolygons)
   }
   
-  override func insertReactSubview(_ subview: UIView!, at atIndex: Int) {
-		print("Trying to insert subview...")
-    handleSubviewInsertion(subview: subview, index: atIndex)
-    super.insertReactSubview(subview, at: atIndex)
+  override func insertSubview(_ view: UIView, at index: Int) {
+    handleSubviewInsertion(subview: view)
+    super.insertSubview(view, at: index)
   }
-	
-	override func insertSubview(_ view: UIView, at index: Int) {
-		handleSubviewInsertion(subview: view, index: index)
-		super.insertSubview(view, at: index)
-	}
-  
-  override func removeReactSubview(_ subview: UIView!) {
+
+  override func willRemoveSubview(_ subview: UIView) {
     handleSubviewRemoval(subview: subview)
-    super.removeReactSubview(subview)
+    super.willRemoveSubview(subview)
   }
-	
-	override func willRemoveSubview(_ subview: UIView) {
-		handleSubviewRemoval(subview: subview)
-		super.willRemoveSubview(subview)
-	}
-	
-	func handleSubviewInsertion(subview: UIView, index: Int) {
-		if (subview.isKind(of: MarkerView.self)) {
-			let markerView = subview as! MarkerView
-			let key = markerView.gmsMarker.userData as! String
-			markerView.setMap(withMap: mapView)
-			markers[key] = markerView
+
+  // MARK: - New Architecture Support
+
+  override func mountChildComponentView(_ childComponentView: UIView, index: Int) {
+    handleSubviewInsertion(subview: childComponentView)
+    super.mountChildComponentView(childComponentView, index: index)
+  }
+
+  override func unmountChildComponentView(_ childComponentView: UIView, index: Int) {
+    handleSubviewRemoval(subview: childComponentView)
+    super.unmountChildComponentView(childComponentView, index: index)
+  }
+
+  // MARK: - Helper Methods
+
+  private func handleSubviewInsertion(subview: UIView) {
+		guard let markerView = subview as? MarkerView,
+				  let key = markerView.gmsMarker.userData as? String else {
+			return
 		}
+		markerView.setMap(withMap: mapView)
+		markers[key] = markerView
 	}
-	
-	func handleSubviewRemoval(subview: UIView) {
-		if (subview.isKind(of: MarkerView.self)) {
-			let markerView = subview as! MarkerView
-			let key = markerView.gmsMarker.userData as! String
-			markerView.gmsMarker.map = nil
-			markers.removeValue(forKey: key)
+
+	private func handleSubviewRemoval(subview: UIView) {
+		guard let markerView = subview as? MarkerView,
+				  let key = markerView.gmsMarker.userData as? String else {
+			return
 		}
+		markerView.gmsMarker.map = nil
+		markers.removeValue(forKey: key)
 	}
-  
+
   func animateCamera(to: GMSCameraPosition, animationOptions: AnimateOptions) {
     CATransaction.begin()
     CATransaction.setAnimationDuration(animationOptions.animationDuration)
@@ -94,13 +95,16 @@ class MapView: ExpoView, GMSMapViewDelegate {
     animateCamera(to: newCamera, animationOptions: animationOptions)
   }
   
+  private func createPath(from coordinates: [Coordinate]) -> GMSMutablePath {
+    coordinates.reduce(into: GMSMutablePath()) { path, coordinate in
+      path.add(coordinate.toCoordinate2D())
+    }
+  }
+
   func setPolygons(polygonRecords: [Polygon]) {
     polygonRecords.forEach { polygonRecord in
       guard let polygon = polygons[polygonRecord.key] else {
-        let path = polygonRecord.coordinates.reduce(into: GMSMutablePath(), { path, coordinate in
-          path.add(coordinate.toCoordinate2D())
-        })
-        let newPolygon = GMSPolygon(path: path)
+        let newPolygon = GMSPolygon(path: createPath(from: polygonRecord.coordinates))
         newPolygon.fillColor = polygonRecord.fillColor
         newPolygon.strokeColor = polygonRecord.strokeColor
         newPolygon.map = mapView
@@ -109,12 +113,9 @@ class MapView: ExpoView, GMSMapViewDelegate {
       }
       polygon.fillColor = polygonRecord.fillColor
       polygon.strokeColor = polygonRecord.strokeColor
-      let path = polygonRecord.coordinates.reduce(into: GMSMutablePath(), { path, coordinate in
-        path.add(coordinate.toCoordinate2D())
-      })
-      polygon.path = path
+      polygon.path = createPath(from: polygonRecord.coordinates)
     }
-    
+
     let inputKeys = Set(polygonRecords.map { $0.key })
     for key in polygons.keys {
       if (!inputKeys.contains(key)) {
@@ -141,9 +142,11 @@ class MapView: ExpoView, GMSMapViewDelegate {
   }
   
   func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-    let markerKey = marker.userData as! String
-    let markerView = markers[markerKey]
-    markerView?.onMarkerPress([:])
+    guard let markerKey = marker.userData as? String,
+          let markerView = markers[markerKey] else {
+      return false
+    }
+    markerView.onMarkerPress([:])
     return true
   }
 }
