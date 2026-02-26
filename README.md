@@ -2,6 +2,8 @@
 
 A native Expo module providing Google Maps integration for iOS and Android applications. On iOS especially, I find that this module is significantly more performant than react-native-maps.
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/balloman/expo-google-maps?utm_source=oss&utm_medium=github&utm_campaign=balloman%2Fexpo-google-maps&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 ## Features
 
 - Native Google Maps rendering on iOS and Android
