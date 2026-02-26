@@ -1,6 +1,10 @@
 name: "Pull Request Workflow"
 on:
   push:
+    paths-ignore:
+      - docs/**
+      - .changeset/**
+      - README.md
   pull_request:
     branches:
       - main
@@ -18,7 +22,7 @@ jobs:
         uses: jdx/mise-action@v3
 
       - name: Install Node.js Dependencies
-        run: bun install
+        run: bun ci
 
       - name: Build Module
         run: "mise run build-module ::: build-app-ts"
