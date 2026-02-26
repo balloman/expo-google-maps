@@ -11,6 +11,7 @@
   "description": "",
   "scripts": {
     "lint": "biome check",
+    "lint:ci": "biome ci",
     "lint:fix": "biome check --fix"
   },
   "author": "Bernard Allotey",
