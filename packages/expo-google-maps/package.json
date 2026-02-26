@@ -16,7 +16,7 @@
     "open:android": "open -a \"Android Studio\" ../../apps/example-app/android",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "prepack": "cp ../README.md ."
+    "prepack": "cp ../../README.md ."
   },
   "keywords": [
     "react-native",
