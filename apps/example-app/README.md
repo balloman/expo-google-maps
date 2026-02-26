@@ -1,50 +1,79 @@
-# Welcome to your Expo app 👋
+# Example App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is the example application demonstrating the usage of `@balloman/expo-google-maps`.
 
-## Get started
+## Prerequisites
 
-1. Install dependencies
+- [Bun](https://bun.sh/) installed
+- iOS: Xcode 16+ and iOS 16+ simulator or device
+- Android: Android Studio and Android SDK
+- Google Maps API keys for both platforms
 
-   ```bash
-   npm install
-   ```
+## Setup
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Install dependencies:
 
 ```bash
-npm run reset-project
+bun install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Configure environment variables:
 
-## Learn more
+Create a `.env` file in the root of this directory with your Google Maps API key:
 
-To learn more about developing your project with Expo, look at the following resources:
+```env
+EXPO_PUBLIC_API_KEY=your_google_maps_api_key_here
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Running the App
 
-## Join the community
+### iOS
 
-Join our community of developers creating universal apps.
+```bash
+bun ios
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This will:
+- Install CocoaPods dependencies
+- Build the iOS project
+- Launch the app in the iOS Simulator
+
+### Android
+
+```bash
+bun android
+```
+
+This will:
+- Build the Android project
+- Launch the app in the Android Emulator
+
+## Available Scripts
+
+- `bun start` - Start the Expo development server
+- `bun ios` - Run on iOS device/simulator
+- `bun android` - Run on Android device/emulator
+
+## Project Structure
+
+- `app/` - Main application code using Expo Router
+- `app/index.tsx` - Main map demonstration screen
+
+## Features Demonstrated
+
+The example app showcases:
+- Basic MapView with camera control
+- Polygon rendering
+- Custom map styling (POI labels hidden)
+- Button-triggered camera animations
+- State-driven polygon updates
+
+## Troubleshooting
+
+### Map Not Displaying
+
+Verify that:
+- `EXPO_PUBLIC_API_KEY` is set in your `.env` file
+- The API key has Google Maps SDK enabled for your platform
+- For iOS: The API key is set via `setApiKey()` in the code
+- For Android: The API key is configured in `app.json` via the plugin
