@@ -11,6 +11,7 @@ permissions:
   issues: write
   checks: write
   pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -20,21 +21,16 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
 
       - name: Install Node.js Dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build
-        run: yarn build
+        run: bun ci
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          publish: yarn changeset publish
+          publish: bun changeset publish
           commit: "chore(release): publish"
           title: "Publish Package"
         env:

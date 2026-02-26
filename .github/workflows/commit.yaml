@@ -1,0 +1,78 @@
+name: "Pull Request Workflow"
+on:
+  push:
+    paths-ignore:
+      - docs/**
+      - .changeset/**
+      - README.md
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+
+jobs:
+  build-module:
+    name: Builds the expo module code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
+
+      - name: Install Node.js Dependencies
+        run: bun ci
+
+      - name: Build Module
+        run: "mise run build-module ::: build-app-ts"
+
+  build-android:
+    name: Build on Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
+
+      - name: Install Node.js Dependencies
+        run: bun ci
+
+      - name: Setup expo
+        uses: expo/expo-github-action@v8
+        with:
+          packager: bun
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build Android
+        run: mise build-android
+
+  build-ios:
+    name: Build on iOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v3
+
+      - name: Install Node.js Dependencies
+        run: bun ci
+
+      - name: Setup expo
+        uses: expo/expo-github-action@v8
+        with:
+          packager: bun
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build iOS
+        run: mise build-ios

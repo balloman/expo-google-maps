@@ -1,0 +1,48 @@
+{
+  "name": "@balloman/expo-google-maps",
+  "version": "1.0.2",
+  "description": "An expo native module for google maps",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "expo-module clean",
+    "lint": "biome check",
+    "test": "expo-module test",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "prepare": "expo-module prepare",
+    "expo-module": "expo-module",
+    "open:ios": "open -a \"Xcode\" ../../apps/example-app/ios",
+    "open:android": "open -a \"Android Studio\" ../../apps/example-app/android",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "prepack": "cp ../README.md ."
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@balloman/expo-google-maps",
+    "ExpoGoogleMaps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balloman/expo-google-maps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/balloman/expo-google-maps/issues"
+  },
+  "author": "Bernard Allotey <ballotey01@gmail.com> (https://github.com/balloman)",
+  "license": "MIT",
+  "homepage": "https://github.com/balloman/expo-google-maps#readme",
+  "devDependencies": {
+    "@expo/config-plugins": "54.0.4",
+    "@types/react": "catalog:",
+    "expo-module-scripts": "^5.0.8",
+    "expo-modules-core": "^3.0.29"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
