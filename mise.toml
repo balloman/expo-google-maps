@@ -13,6 +13,10 @@ swiftlint = "0.63.2"
 description = "Lint the typescript code"
 run = "bun lint:ci"
 
+[tasks.format-ts]
+description = "Formats the typescript code"
+run = "bun lint:fix"
+
 [tasks.lint-ios]
 description = "Lints the ios code"
 run = "swift format lint --recursive packages/expo-google-maps/ios/ -s"
@@ -32,6 +36,10 @@ description = "Formats the android code"
 dir = "{{ config_root }}/apps/example-app/android"
 run = "./gradlew spotlessApply"
 depends = ["prebuild"]
+
+[tasks.format-all]
+description = "Formats everything"
+depends = ["format-android", "format-ios", "format-ts"]
 
 [tasks.build-module]
 description = "Builds the module"

@@ -107,8 +107,12 @@ class ExpoMapView(context: Context, appContext: AppContext) :
   @Composable
   private fun MapPolygons(polygonState: List<PolygonRecord>) {
     polygonState.forEach {
-      val fillColor = it.fillColor?.takeIf { it.isNotEmpty() }?.toColorInt() ?: android.graphics.Color.TRANSPARENT
-      val strokeColor = it.strokeColor?.takeIf { it.isNotEmpty() }?.toColorInt() ?: android.graphics.Color.TRANSPARENT
+      val fillColor =
+          it.fillColor?.takeIf { it.isNotEmpty() }?.toColorInt()
+              ?: android.graphics.Color.TRANSPARENT
+      val strokeColor =
+          it.strokeColor?.takeIf { it.isNotEmpty() }?.toColorInt()
+              ?: android.graphics.Color.TRANSPARENT
       Polygon(
           points = it.points,
           fillColor = Color(fillColor),
