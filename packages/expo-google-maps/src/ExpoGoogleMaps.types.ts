@@ -49,7 +49,7 @@ export type FitToBoundsOptions = {
  * Animation options for camera movements
  */
 export type AnimationOptions = {
-	/** The duration in seoncds */
+	/** The duration in seconds */
 	animationDuration?: number;
 	/** The animation function to use - ios only
 	 * @platform ios

@@ -124,13 +124,12 @@ class MapView: ExpoView, GMSMapViewDelegate {
     }
 
     let inputKeys = Set(polygonRecords.map { $0.key })
-    for key in polygons.keys {
-      if !inputKeys.contains(key) {
-        let gmsPolygon = polygons[key]
-        gmsPolygon?.map = nil
-        gmsPolygon?.layer.removeFromSuperlayer()
-        polygons.removeValue(forKey: key)
-      }
+    let keysToRemove = polygons.keys.filter { !inputKeys.contains($0) }
+    for key in keysToRemove {
+      let gmsPolygon = polygons[key]
+      gmsPolygon?.map = nil
+      gmsPolygon?.layer.removeFromSuperlayer()
+      polygons.removeValue(forKey: key)
     }
   }
 

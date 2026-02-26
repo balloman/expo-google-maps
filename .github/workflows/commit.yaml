@@ -39,7 +39,7 @@ jobs:
         uses: jdx/mise-action@v3
 
       - name: Install Node.js Dependencies
-        run: bun install
+        run: bun ci
 
       - name: Setup expo
         uses: expo/expo-github-action@v8
@@ -63,7 +63,7 @@ jobs:
         uses: jdx/mise-action@v3
 
       - name: Install Node.js Dependencies
-        run: bun install
+        run: bun ci
 
       - name: Setup expo
         uses: expo/expo-github-action@v8

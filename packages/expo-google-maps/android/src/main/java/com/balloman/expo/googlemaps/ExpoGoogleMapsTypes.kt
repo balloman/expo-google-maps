@@ -18,9 +18,9 @@ class MarkerRecord : Record {
 class PolygonRecord : Record {
   @Field val key = ""
 
-  @Field val fillColor: String = ""
+  @Field val fillColor: String? = null
 
-  @Field val strokeColor: String = ""
+  @Field val strokeColor: String? = null
 
   @Field val coordinates: Array<Coordinate> = arrayOf()
 

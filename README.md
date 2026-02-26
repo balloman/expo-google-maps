@@ -15,11 +15,23 @@ A native Expo module providing Google Maps integration for iOS and Android appli
 
 ## Requirements
 
-- iOS 16.0+ / Android API 21+
+- iOS 16.0+ / Android API 33+
 - Expo SDK 52+
 - React Native 0.76+
 - Google Maps API key
-- New Architecture
+- New Architecture (Fabric & TurboModules)
+
+**Note:** The module supports Android API 21+ in theory, but the example app requires API 33+ due to simulator compatibility issues.
+
+### About New Architecture
+
+This module requires React Native's New Architecture (Fabric for UI and TurboModules for native modules). This is enabled by default in Expo SDK 52+.
+
+To ensure New Architecture is enabled in your project:
+- **Expo projects**: Set `"newArchEnabled": true` in your app.json/app.config.js (enabled by default in SDK 52+)
+- **Bare React Native projects**: Follow the [official React Native New Architecture guide](https://reactnative.dev/docs/new-architecture-intro)
+
+The New Architecture provides better performance and is the future of React Native development.
 
 ## Installation
 
@@ -149,29 +161,29 @@ function App() {
   };
 
   return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}
-		>
-			<MapView
-				mapRef={mapRef}
-				camera={{
-					center: { latitude: 37.7749, longitude: -122.4194 },
-					zoom: 12,
-				}}
-				style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-			/>
-			<View style={{ backgroundColor: 'brown', top: '25%' }}>
-				<Button
-					title="Click Me"
-					color="white"
-					onPress={() => animateToLocation()}
-				></Button>
-			</View>
-		</View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <MapView
+        mapRef={mapRef}
+        camera={{
+          center: { latitude: 37.7749, longitude: -122.4194 },
+          zoom: 12,
+        }}
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+      />
+      <View style={{ backgroundColor: 'brown', top: '25%' }}>
+        <Button
+          title="Click Me"
+          color="white"
+          onPress={() => animateToLocation()}
+        ></Button>
+      </View>
+    </View>
   );
 }
 ```
@@ -381,4 +393,4 @@ Contributions are welcome. Please open an issue or pull request on GitHub.
 
 ## Support
 
-For issues and feature requests, please use the issue tracker in the Github.
+For issues and feature requests, please use the issue tracker in the GitHub.

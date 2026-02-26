@@ -3,7 +3,7 @@ import ExpoGoogleMapsModule from './ExpoGoogleMapsModule';
 /**
  * Sets the api key for the application instance
  * @param key The key to set
- * @platform android
+ * @platform ios
  */
 export function setApiKey(key: string) {
 	ExpoGoogleMapsModule.setApiKey(key);

@@ -53,13 +53,14 @@ public class ExpoGoogleMapsModule: Module {
       }
 
       Prop("styleJson") { (view, json: String?) in
-        guard json != nil else {
-          return
-        }
-        do {
-          view.mapView?.mapStyle = try GMSMapStyle(jsonString: json!)
-        } catch {
-          view.log("Native Error: One or more of the map styles failed to load. \(error)")
+        if let json = json {
+          do {
+            view.mapView?.mapStyle = try GMSMapStyle(jsonString: json)
+          } catch {
+            view.log("Native Error: One or more of the map styles failed to load. \(error)")
+          }
+        } else {
+          view.mapView?.mapStyle = nil
         }
       }
 
@@ -68,7 +69,11 @@ public class ExpoGoogleMapsModule: Module {
       }
 
       Prop("mapId") { (view, mapId: String?) in
-        mapId.map { view.mapOptions.mapID = GMSMapID(identifier: $0) }
+        if let mapId = mapId {
+          view.mapOptions.mapID = GMSMapID(identifier: mapId)
+        } else {
+          view.mapOptions.mapID = nil
+        }
       }
 
       Events("onMapIdle")

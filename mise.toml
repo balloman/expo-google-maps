@@ -28,7 +28,7 @@ run = "./gradlew spotlessCheck"
 depends = ["prebuild"]
 
 [tasks.format-android]
-description = "Lints the android code"
+description = "Formats the android code"
 dir = "{{ config_root }}/apps/example-app/android"
 run = "./gradlew spotlessApply"
 depends = ["prebuild"]
