@@ -5,8 +5,8 @@
 //  Created by Bernard Allotey on 10/13/23.
 //
 
-import Foundation
 import ExpoModulesCore
+import Foundation
 import GoogleMaps
 
 class MarkerView: ExpoView {
@@ -17,8 +17,8 @@ class MarkerView: ExpoView {
   }
   var gmsMarker: GMSMarker
   let onMarkerPress = EventDispatcher()
-  
-  required init (appContext: AppContext? = nil) {
+
+  required init(appContext: AppContext? = nil) {
     gmsMarker = GMSMarker()
     gmsMarker.tracksViewChanges = false
     super.init(appContext: appContext)
@@ -28,19 +28,18 @@ class MarkerView: ExpoView {
     gmsMarker.iconView = subview
   }
 
-	override func unmountChildComponentView(_ childComponentView: UIView, index: Int) {
-		/* With the new architecture, we need to make sure we remove the view from the heirarchy before the Marker is removed
-		 This is because the Marker's icon is held by the map and not the marker, so if we try to remove the marker, Swift will complain
-		 that the icon can't be removed since it's owned by a different view if that makes sense.
-		*/
-		if (childComponentView.nativeID == gmsMarker.iconView?.nativeID) {
-			gmsMarker.iconView = nil
-			// This is an extra step in case we still want the marker but not the view, so this explicitly deattaches the subview from the map
-			childComponentView.removeFromSuperview()
-			return
-		}
-		super.unmountChildComponentView(childComponentView, index: index)
-	}
+  override func unmountChildComponentView(_ childComponentView: UIView, index: Int) {
+    // With the new architecture, we need to make sure we remove the view from the heirarchy before the Marker is removed
+    // This is because the Marker's icon is held by the map and not the marker, so if we try to remove the marker, Swift will complain
+    // that the icon can't be removed since it's owned by a different view if that makes sense.
+    if childComponentView.nativeID == gmsMarker.iconView?.nativeID {
+      gmsMarker.iconView = nil
+      // This is an extra step in case we still want the marker but not the view, so this explicitly deattaches the subview from the map
+      childComponentView.removeFromSuperview()
+      return
+    }
+    super.unmountChildComponentView(childComponentView, index: index)
+  }
 
   func setMap(withMap: GMSMapView?) {
     gmsMarker.map = withMap

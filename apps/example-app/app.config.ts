@@ -2,13 +2,18 @@ import type { ExpoConfig } from 'expo/config';
 
 export default (): ExpoConfig => ({
 	name: 'example-app',
-	slug: 'example-app',
+	slug: 'expo-google-maps-example',
 	version: '1.0.0',
 	orientation: 'portrait',
 	icon: './assets/images/icon.png',
 	scheme: 'exampleapp',
 	userInterfaceStyle: 'automatic',
 	newArchEnabled: true,
+	extra: {
+		eas: {
+			projectId: '6a149424-d80c-43bb-a3c9-30992d1e47b5',
+		},
+	},
 	ios: {
 		supportsTablet: true,
 		bundleIdentifier: 'com.balloman.exampleapp',

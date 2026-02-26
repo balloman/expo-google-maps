@@ -2,42 +2,69 @@
 
 [tools]
 bun = "1.3.6"
-"gem:xcpretty" = "latest"
+"gem:fastlane" = "2.232.1"
 java = "zulu-17"
 node = "24"
 ruby = "3.4"
+swiftlint = "0.63.2"
 
 
 [tasks.lint-ts]
 description = "Lint the typescript code"
 run = "bun lint"
+
+[tasks.lint-ios]
+description = "Lints the ios code"
+run = "swift format lint --recursive packages/expo-google-maps/ios/ -s"
+
+[tasks.format-ios]
+description = "Formats the ios code"
+run = "swift format format --recursive packages/expo-google-maps/ios/ -i"
+
+[tasks.lint-android]
+description = "Lints the android code"
+dir = "{{ config_root }}/apps/example-app/android"
+run = "./gradlew spotlessCheck"
+depends = ["prebuild"]
+
+[tasks.format-android]
+description = "Lints the android code"
+dir = "{{ config_root }}/apps/example-app/android"
+run = "./gradlew spotlessApply"
+depends = ["prebuild"]
+
 [tasks.build-module]
 description = "Builds the module"
 run = "bun run --filter @balloman/expo-google-maps build"
 depends = ["lint-ts"]
+
 [tasks.build-app-ts]
 description = "Builds the typescript of the example app"
 run = "bun run --filter example-app tsc:build"
 sources = ['apps/example-app/app/**']
 depends = ["lint-ts"]
+
 [tasks.prebuild]
 description = "Runs Expo Prebuild"
 run = "bunx expo prebuild"
 sources = ['apps/example-app/**', 'packages/expo-google-maps/**']
 depends = ["build-module"]
 dir = "{{ config_root }}/apps/example-app"
+
 [tasks.build-android]
 description = "Builds the android app"
-run = "./gradlew build"
+run = "eas build --profile preview --local --platform android --non-interactive"
 sources = ['**/package.json', 'bun.lock', '**/android/**']
 dir = "{{ config_root }}/apps/example-app/android"
-depends = ["prebuild"]
+depends = ["prebuild", "lint-android"]
+
 [tasks.build-ios]
 description = "Builds the ios app"
-run = "xcodebuild -scheme exampleapp -destination 'generic/platform=iOS Simulator' -workspace exampleapp.xcworkspace | xcpretty && exit ${PIPESTATUS[0]}"
+run = "eas build --profile preview --local --platform ios --non-interactive"
 dir = "{{ config_root }}/apps/example-app/ios"
 sources = ['**/package.json', 'bun.lock', '**/ios/**']
-depends = ["prebuild"]
+depends = ["prebuild", "lint-ios"]
+
 [tasks.build]
 description = "Builds the whole project"
 depends = ["build-module", "build-android", "build-ios", "build-app-ts"]

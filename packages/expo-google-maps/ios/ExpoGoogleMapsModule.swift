@@ -9,11 +9,11 @@ public class ExpoGoogleMapsMarkerModule: Module {
       Prop("marker") { (view, marker: Marker) in
         view.markerInfo = marker
       }
-      
+
       Prop("tracksViewChanges") { (view, tracks: Bool) in
         view.gmsMarker.tracksViewChanges = tracks
       }
-      
+
       Events("onMarkerPress")
     }
   }
@@ -42,17 +42,18 @@ public class ExpoGoogleMapsModule: Module {
     // view definition: Prop, Events.
     View(MapView.self) {
       Prop("camera") { (view, camera: Camera) in
-        view.mapView?.camera = GMSCameraPosition(latitude: camera.center.latitude, longitude: camera.center.longitude,
-                                                 zoom: camera.zoom, bearing: camera.bearing ?? 0, 
-                                                 viewingAngle: camera.viewingAngle ?? 0)
+        view.mapView?.camera = GMSCameraPosition(
+          latitude: camera.center.latitude, longitude: camera.center.longitude,
+          zoom: camera.zoom, bearing: camera.bearing ?? 0,
+          viewingAngle: camera.viewingAngle ?? 0)
       }
 
       Prop("polygons") { (view, polygons: [Polygon]) in
-				view.propPolygons = polygons
+        view.propPolygons = polygons
       }
 
       Prop("styleJson") { (view, json: String?) in
-        guard (json != nil) else {
+        guard json != nil else {
           return
         }
         do {
@@ -61,27 +62,32 @@ public class ExpoGoogleMapsModule: Module {
           view.log("Native Error: One or more of the map styles failed to load. \(error)")
         }
       }
-      
+
       Prop("showUserLocation") { (view, showUserLocation: Bool) in
         view.mapView?.isMyLocationEnabled = showUserLocation
       }
-			
-			Prop("mapId") { (view, mapId: String?) in
-				mapId.map { view.mapOptions.mapID = GMSMapID(identifier: $0) }
-			}
-      
+
+      Prop("mapId") { (view, mapId: String?) in
+        mapId.map { view.mapOptions.mapID = GMSMapID(identifier: $0) }
+      }
+
       Events("onMapIdle")
       Events("onDidChange")
 
       //Animates camera to given location
-      AsyncFunction("animateCamera") { (view: MapView, camera: Camera, animationOptions: AnimateOptions?) in
-        view.animateCamera(to: camera.toGmsCameraPos(), animationOptions: animationOptions ?? AnimateOptions())
+      AsyncFunction("animateCamera") {
+        (view: MapView, camera: Camera, animationOptions: AnimateOptions?) in
+        view.animateCamera(
+          to: camera.toGmsCameraPos(), animationOptions: animationOptions ?? AnimateOptions())
       }
-      
-      AsyncFunction("fitToBounds") { (view: MapView, params: FitToBoundsParams, animationOptions: AnimateOptions?) in
-        view.fitToBounds(topRight: params.topRight.toCoordinate2D(), bottomLeft: params.bottomLeft.toCoordinate2D(),
-                         insets: params.insets?.toUiEdgeInsets() ?? UIEdgeInsets(),
-                         animationOptions: animationOptions ?? AnimateOptions())
+
+      AsyncFunction("fitToBounds") {
+        (view: MapView, params: FitToBoundsParams, animationOptions: AnimateOptions?) in
+        view.fitToBounds(
+          topRight: params.topRight.toCoordinate2D(),
+          bottomLeft: params.bottomLeft.toCoordinate2D(),
+          insets: params.insets?.toUiEdgeInsets() ?? UIEdgeInsets(),
+          animationOptions: animationOptions ?? AnimateOptions())
       }
     }
   }

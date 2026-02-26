@@ -5,8 +5,8 @@
 //  Created by Bernard Allotey on 11/1/23.
 //
 
-import Foundation
 import ExpoModulesCore
+import Foundation
 
 extension AppContext {
   func log(_ items: Any...) {
