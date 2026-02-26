@@ -122,7 +122,9 @@ function App() {
 
 ### Camera Animation
 
-<video src="docs/assets/animate.mp4" width="300" controls></video>
+
+https://github.com/user-attachments/assets/340c9629-7bc3-4a1c-a9b4-62cbecde5de5
+
 
 ```typescript
 import { useRef } from 'react';
