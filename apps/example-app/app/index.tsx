@@ -5,7 +5,7 @@ import {
 	setApiKey,
 } from '@balloman/expo-google-maps';
 import * as Location from 'expo-location';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Text, View } from 'react-native';
 import * as z from 'zod';
 import styleJson from '../style.json';
@@ -20,6 +20,7 @@ setApiKey(env.EXPO_PUBLIC_API_KEY);
 
 export default function Index() {
 	const mapViewRef = React.useRef<MapFunctions>(null);
+	const mapRef = useRef<MapFunctions>(null);
 	const [status, setStatus] = React.useState<Location.PermissionStatus>();
 	const [text] = React.useState<string>('hello');
 	const [markerPos] = React.useState<number>(37.78825);
@@ -50,6 +51,29 @@ export default function Index() {
 		}
 	}, [status]);
 
+	const animateToLocation = async () => {
+		await mapRef.current?.animateCamera(
+			{
+				center: { latitude: 40.7128, longitude: -74.006 },
+				zoom: 14,
+				bearing: 45,
+				viewingAngle: 30,
+			},
+			{
+				animationDuration: 2,
+				animationFunction: 'easeInEaseOut',
+			},
+		);
+	};
+
+	const mapStyle = JSON.stringify([
+		{
+			featureType: 'poi',
+			elementType: 'labels',
+			stylers: [{ visibility: 'off' }],
+		},
+	]);
+
 	return (
 		<View
 			style={{
@@ -59,6 +83,28 @@ export default function Index() {
 			}}
 		>
 			<MapView
+				camera={{
+					center: { latitude: 37.7749, longitude: -122.4194 },
+					zoom: 12,
+				}}
+				styleJson={mapStyle}
+				style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+				polygons={[
+					{
+						key: '1',
+						coordinates: [
+							{ latitude: 37.78825, longitude: -122.4324 },
+							{ latitude: 37.78825, longitude: -122.44 },
+							{ latitude: 37.792, longitude: -122.44 },
+							{ latitude: 37.792, longitude: -122.4324 },
+						],
+						strokeColor: 'red',
+						fillColor: '#5533CC22',
+					},
+				]}
+			/>
+
+			{/* <MapView
 				camera={{
 					center: { latitude: 37.78825, longitude: -122.4324 },
 					zoom: 13,
@@ -124,8 +170,8 @@ export default function Index() {
 						mapViewRef.current?.animateCamera(
 							{
 								center: {
-									latitude: 35,
-									longitude: 35,
+									latitude: 37.782,
+									longitude: -122.44,
 								},
 								zoom: 7,
 								viewingAngle: 40,
@@ -136,8 +182,8 @@ export default function Index() {
 						);
 						console.log('Clicked');
 					}}
-				/>
-			</View>
+				/> */}
+			{/* </View> */}
 		</View>
 	);
 }
