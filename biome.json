@@ -15,7 +15,8 @@
 			"!**/.zed",
 			"!**/.changeset",
 			"!apps/example-app/android/",
-			"!apps/example-app/ios/"
+			"!apps/example-app/ios/",
+			"!**/tsconfig.json"
 		]
 	},
 	"formatter": {
