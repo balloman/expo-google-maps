@@ -2,14 +2,18 @@ name: "Pull Request Workflow"
 on:
   push:
     paths-ignore:
-      - docs/**
-      - .changeset/**
-      - README.md
+      - "**/*.md"
+      - "docs/**"
+      - ".changeset/**"
   pull_request:
     branches:
       - main
     types:
       - opened
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - ".changeset/**"
 
 jobs:
   build-module:
