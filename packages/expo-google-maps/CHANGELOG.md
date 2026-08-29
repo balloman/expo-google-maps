@@ -1,5 +1,13 @@
 # @balloman/expo-google-maps
 
+## 2.0.1
+
+### Patch Changes
+
+- [#128](https://github.com/balloman/expo-google-maps/pull/128) [`819557b`](https://github.com/balloman/expo-google-maps/commit/819557b3baa144592ab57f1627f1a98d8060edf8) Thanks [@balloman](https://github.com/balloman)! - Include the compiled Expo config plugin in the published package.
+
+- [#129](https://github.com/balloman/expo-google-maps/pull/129) [`915f64e`](https://github.com/balloman/expo-google-maps/commit/915f64eafd1291e32c123735c31d5b9273bc8e2b) Thanks [@balloman](https://github.com/balloman)! - Add a linked npm version badge to the package documentation.
+
 ## 2.0.0
 
 ### Major Changes
