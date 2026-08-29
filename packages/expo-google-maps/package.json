@@ -4,6 +4,22 @@
   "description": "An expo native module for google maps",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "plugin/build",
+    "app.plugin.js",
+    "android/build.gradle.kts",
+    "android/config/detekt/detekt.yml",
+    "android/src",
+    "ios/ExpoGoogleMaps.podspec",
+    "ios/*.swift",
+    "ios/Extensions",
+    "ios/Views",
+    "expo-module.config.json",
+    "app.json",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "tsc --build",
     "clean": "expo-module clean",
